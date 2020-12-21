@@ -8,7 +8,7 @@
 
         <div class="admin_main_block_right">
           <div class="mr10">
-            <el-button icon="el-icon-back" @click="$router.push({name: 'module_member_list'})">
+            <el-button icon="el-icon-back" @click="$router.push({name: 'module_teacher_management_list'})">
               {{ $t('common.return') }}
             </el-button>
           </div>

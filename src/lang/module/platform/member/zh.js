@@ -8,14 +8,25 @@ export const member = {
   archive_info: '学员档案',
 
   member_no: '学员ID',
-  avatar: '学员头像',
+  avatar: '宝宝头像',
   username: '登录账户',
   mobile: '手机',
   email: '邮箱',
-  nickname: '学员昵称',
+  nickname: '宝宝昵称',
+
+  red_envelope: '红包金额',
+  lollipop: '棒棒糖',
+  production: '累计作品',
+
   status: '账号状态',
   last_login_time: '最后登录时间',
   create_time: '注册时间',
+
+  enable: '解禁',
+  disable: '禁用',
+
+  freeze: '冻结',
+  thaw: '解冻',
 
   role: {
     list: '身份列表',
@@ -64,12 +75,10 @@ export const member = {
     view: '档案详情',
     info: '学员档案',
 
-    sex: '性别',
-    age: '年龄',
+    sex: '宝宝性别',
+    age: '宝宝年龄',
     weixin: '微信号',
-    id_card_no: '身份证号',
-    realname: '真实姓名',
-    national: '民族',
+    birthday: '宝宝生日',
     area: '地区',
     address: '详细地址',
     work_address: '工作地址',

@@ -7,8 +7,8 @@
         <el-scrollbar>
           <!-- LOGO -->
           <div class="head_logo">
-            <span>职业</span>
-            <font v-show="isShow">技能培训</font>
+            <span>小丑鱼</span>
+            <font v-show="isShow">教育平台</font>
           </div>
           <!-- 左侧导航 -->
           <el-menu

@@ -77,7 +77,7 @@ export default {
           'relevance_role_id': this.dataForm.relevance_role_id,
           'course_title': this.dataForm.course_title,
           'organization_title': this.dataForm.organization_title,
-          'squad_title': this.dataForm.squad_title,
+          'archive_weixin': this.dataForm.archive_weixin,
           'teacher_name': this.dataForm.teacher_name,
         })
       }).then(({data}) => {

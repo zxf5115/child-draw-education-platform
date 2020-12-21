@@ -4,6 +4,25 @@
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
           <div>
+            <router-link :to="{name: 'module_teacher_management_form'}">
+              <el-button v-if="isAuth('module:teacher:management:form')" type="success" icon="el-icon-plus">
+                {{ $t('common.create') }}
+              </el-button>
+            </router-link>
+          </div>
+        </div>
+        <div class="admin_main_block_right">
+          <div>
+            <el-button v-if="isAuth('module:teacher:management:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle()">
+              {{ $t('common.batch_delete') }}
+            </el-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin_main_block_top">
+        <div class="admin_main_block_left">
+          <div>
             <el-input v-model="dataForm.username" :placeholder="$t('common.please_input') + $t('member.username')" clearable>
             </el-input>
           </div>
@@ -12,7 +31,7 @@
             </el-input>
           </div>
           <div>
-            <el-input v-model="dataForm.nickname" :placeholder="$t('common.please_input') + $t('member.nickname')" clearable>
+            <el-input v-model="dataForm.nickname" :placeholder="$t('common.please_input') + $t('teacher.management.nickname')" clearable>
             </el-input>
           </div>
           <div>
@@ -33,7 +52,13 @@
           <el-table-column prop="username" :label="$t('member.username')"  width="100">
           </el-table-column>
 
-          <el-table-column :label="$t('member.info')" width="250">
+          <el-table-column :label="$t('teacher.management.archive.weixin')" width="100">
+            <template slot-scope="scope" v-if="scope.row.archive">
+              {{ scope.row.archive.weixin }}
+            </template>
+          </el-table-column>
+
+          <el-table-column :label="$t('teacher.management.info')" width="250">
             <template slot-scope="scope">
               <dl class="table_dl">
                 <dt>
@@ -42,85 +67,54 @@
                   </el-avatar>
                 </dt>
                 <dd class="table_dl_dd_all_30">
-                  {{ $t('member.nickname') }}： {{ scope.row.nickname }}
+                  {{ $t('teacher.management.nickname') }}： {{ scope.row.nickname }}
                 </dd>
                 <dd class="table_dl_dd_all_16_gray">
-                  {{ $t('member.create_time') }}： {{ scope.row.create_time }}
+                  {{ $t('teacher.management.create_time') }}： {{ scope.row.create_time }}
                 </dd>
               </dl>
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.archive.sex')" width="70">
+          <el-table-column :label="$t('teacher.management.archive.sex')" width="80">
             <template slot-scope="scope" v-if="scope.row.archive">
               {{ scope.row.archive.sex.text }}
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.archive.birthday')" width="80">
+          <el-table-column :label="$t('teacher.management.archive.city')" width="150">
             <template slot-scope="scope" v-if="scope.row.archive">
-              {{ scope.row.archive.birthday }}
+              {{ scope.row.archive.province_id.text }} {{ scope.row.archive.city_id.text }} {{ scope.row.archive.region_id.text }}
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.archive.age')" width="70">
-            <template slot-scope="scope" v-if="scope.row.archive">
-              {{ scope.row.archive.age }}
-            </template>
-          </el-table-column>
-
-          <el-table-column :label="$t('member.archive.address')" width="150">
+          <el-table-column :label="$t('teacher.management.archive.address')">
             <template slot-scope="scope" v-if="scope.row.archive">
               {{ scope.row.archive.address }}
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.archive.weixin')" width="120">
-            <template slot-scope="scope" v-if="scope.row.archive">
-              {{ scope.row.archive.weixin }}
-            </template>
-          </el-table-column>
-
-          <el-table-column :label="$t('member.red_envelope')" width="70">
-            <template slot-scope="scope" v-if="scope.row.asset">
-              {{ scope.row.asset.red_envelope }}
-            </template>
-          </el-table-column>
-
-          <el-table-column :label="$t('member.lollipop')" width="70">
-            <template slot-scope="scope" v-if="scope.row.asset">
-              {{ scope.row.asset.lollipop }}
-            </template>
-          </el-table-column>
-
-          <el-table-column :label="$t('member.production')" width="70">
-            <template slot-scope="scope" v-if="scope.row.asset">
-              {{ scope.row.asset.production }}
-            </template>
-          </el-table-column>
-
-          <el-table-column :label="$t('common.handle')" fixed="right" width="280">
+          <el-table-column :label="$t('common.handle')" fixed="right" width="380">
             <template slot-scope="scope">
-              <el-button v-if="isAuth('module:member:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_member_view', query: {id: scope.row.id}})">
+              <el-button v-if="isAuth('module:teacher:management:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_teacher_management_view', query: {id: scope.row.id}})">
                 {{ $t('common.view') }}
               </el-button>
 
-              <el-button v-if="isAuth('module:member:freeze')" :type="scope.row.is_freeze.value == 1 ? 'warning' : 'primary'" :icon="scope.row.is_freeze.value == 1 ? 'el-icon-s-help' : 'el-icon-help'" @click="freezeHandle(scope.row.id, scope.row.is_freeze.value)">
-                <span v-if="scope.row.is_freeze.value == 1">
-                  {{ $t('member.freeze') }}
-                </span>
-                <span v-else>
-                  {{ $t('member.thaw') }}
-                </span>
-              </el-button>
-
-              <el-button v-if="isAuth('module:member:enable')" :type="scope.row.status.value == 2 ? 'danger' : 'success'" :icon="scope.row.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(scope.row.id, scope.row.status.value)">
+              <el-button v-if="isAuth('module:teacher:management:enable')" :type="scope.row.status.value == 2 ? 'danger' : 'success'" :icon="scope.row.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(scope.row.id, scope.row.status.value)">
                 <span v-if="scope.row.status.value == 1">
                   {{ $t('member.enable') }}
                 </span>
                 <span v-else>
                   {{ $t('member.disable') }}
                 </span>
+              </el-button>
+
+              <el-button v-if="isAuth('module:teacher:management:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_teacher_management_form', query: {id: scope.row.id}})">
+                {{ $t('common.update') }}
+              </el-button>
+
+              <el-button v-if="isAuth('module:teacher:management:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
+                {{ $t('common.delete') }}
               </el-button>
             </template>
           </el-table-column>
@@ -148,7 +142,7 @@
     extends: common,
     data() {
       return {
-        model: 'member',
+        model: 'teacher/management',
         dataForm: [
           'username',
           'nickname',

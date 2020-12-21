@@ -40,12 +40,9 @@
       }
     },
     props: {
-      province_id: Number,
-      city_id: Number,
-      region_id: Number,
-    },
-    created () {
-      this.init();
+      province_id: [String, Number],
+      city_id: [String, Number],
+      region_id: [String, Number],
     },
     methods: {
       init ()
@@ -152,6 +149,9 @@
         }
       },
     },
+    created () {
+      this.init();
+    }
   }
 </script>
 <style lang="scss" scoped>

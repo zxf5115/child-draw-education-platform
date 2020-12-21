@@ -17,6 +17,8 @@ import  {organization}  from './module/platform/organization/zh'
 import  {squad}  from './module/platform/organization/squad/zh'
 
 import  {member}  from './module/platform/member/zh'
+import  {teacher}  from './module/platform/teacher/zh'
+
 import  {advertising}  from './module/platform/advertising/zh'
 import  {course}  from './module/platform/education/course/zh'
 import  {graduation}  from './module/platform/education/graduation/zh'
@@ -83,6 +85,11 @@ export default {
   // 学员
   member: {
     ...member
+  },
+
+  // 老师
+  teacher: {
+    ...teacher
   },
 
   // 课程
