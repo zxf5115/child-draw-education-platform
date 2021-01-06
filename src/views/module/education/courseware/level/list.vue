@@ -4,7 +4,7 @@
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
           <div>
-            <el-button v-if="isAuth('module:education:courseware:level:form')" type="success" icon="el-icon-plus" @click="$router.push({name: 'module_education_courseware_level_form'})">
+            <el-button v-if="isAuth('module:education:courseware:level:form')" type="success" icon="el-icon-plus" @click="$router.push({name: 'module_education_courseware_level_form', query: {'courseware_id': dataForm.courseware_id}})">
               {{ $t('common.create') }}
             </el-button>
           </div>
@@ -47,7 +47,7 @@
 
           <el-table-column :label="$t('common.handle')" fixed="right" width="400">
             <template slot-scope="scope">
-              <el-button v-if="isAuth('module:education:courseware:level:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_education_courseware_level_form', query: {id : scope.row.id}})">
+              <el-button v-if="isAuth('module:education:courseware:level:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_education_courseware_level_form', query: {id : scope.row.id, courseware_id: dataForm.courseware_id}})">
                 {{ $t('common.update') }}
               </el-button>
 

@@ -3,7 +3,7 @@
     <div class="admin_main_block">
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
-          <div>{{ $t('course.level.from') }}</div>
+          <div>{{ $t('courseware.level.from') }}</div>
         </div>
 
         <div class="admin_main_block_right">
@@ -18,16 +18,16 @@
       <div class="admin_form_main">
         <el-form label-width="120px" ref="dataForm" :model="dataForm" :rules="dataRule">
 
-          <el-form-item :label="$t('course.level.minimum_age')" prop="minimum_age">
-            <el-input-number :placeholder="$t('common.please_input') + $t('course.level.minimum_age')" :min="0" :max="100" v-model="dataForm.minimum_age"></el-input-number>
+          <el-form-item :label="$t('courseware.level.minimum_age')" prop="minimum_age">
+            <el-input-number :placeholder="$t('common.please_input') + $t('courseware.level.minimum_age')" :min="0" :max="100" v-model="dataForm.minimum_age"></el-input-number>
           </el-form-item>
 
-          <el-form-item :label="$t('course.level.largest_age')" prop="largest_age">
-            <el-input-number :placeholder="$t('common.please_input') + $t('course.level.largest_age')" :min="0" :max="100" v-model="dataForm.largest_age"></el-input-number>
+          <el-form-item :label="$t('courseware.level.largest_age')" prop="largest_age">
+            <el-input-number :placeholder="$t('common.please_input') + $t('courseware.level.largest_age')" :min="0" :max="100" v-model="dataForm.largest_age"></el-input-number>
           </el-form-item>
 
-          <el-form-item :label="$t('course.level.description')" prop="description">
-            <el-input :placeholder="$t('common.please_input') + $t('course.level.description')" type="textarea" v-model="dataForm.description"></el-input>
+          <el-form-item :label="$t('courseware.level.description')" prop="description">
+            <el-input :placeholder="$t('common.please_input') + $t('courseware.level.description')" type="textarea" v-model="dataForm.description"></el-input>
           </el-form-item>
 
           <el-form-item>
@@ -53,10 +53,11 @@
     data()
     {
       return {
-        model: 'education/course/level',
+        model: 'education/courseware/level',
         dataForm:
         {
           id: 0,
+          courseware_id: 0,
           minimum_age: 0,
           largest_age: 0,
           description: '',
@@ -64,10 +65,10 @@
         dataRule:
         {
           minimum_age: [
-            { required: true, message: this.$t('course.level.rules.minimum_age.require'), trigger: 'blur' }
+            { required: true, message: this.$t('courseware.level.rules.minimum_age.require'), trigger: 'blur' }
           ],
           largest_age: [
-            { required: true, message: this.$t('course.level.rules.largest_age.require'), trigger: 'blur' }
+            { required: true, message: this.$t('courseware.level.rules.largest_age.require'), trigger: 'blur' }
           ],
         }
       };
@@ -84,14 +85,15 @@
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/education/course/level/view/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/education/courseware/level/view/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.minimum_age = data.data.minimum_age
-                this.dataForm.largest_age = data.data.largest_age
-                this.dataForm.description = data.data.description
+                this.dataForm.courseware_id = data.data.courseware_id
+                this.dataForm.minimum_age   = data.data.minimum_age
+                this.dataForm.largest_age   = data.data.largest_age
+                this.dataForm.description   = data.data.description
               }
             })
           }
@@ -102,10 +104,11 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/education/course/level/handle`),
+              url: this.$http.adornUrl(`/education/courseware/level/handle`),
               method: 'post',
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
+                'courseware_id': this.dataForm.courseware_id,
                 'minimum_age': this.dataForm.minimum_age,
                 'largest_age': this.dataForm.largest_age,
                 'description': this.dataForm.description,
@@ -128,6 +131,7 @@
     },
     created(request)
     {
+      this.dataForm.courseware_id = this.$route.query.courseware_id;
       this.init();
     }
   };
