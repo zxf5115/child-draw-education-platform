@@ -3,7 +3,7 @@
     <div class="admin_main_block">
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
-          <div>{{ $t('member.archive_info') }}</div>
+          <div>{{ $t('teacher.management.view') }}</div>
         </div>
 
         <div class="admin_main_block_right">
@@ -29,90 +29,69 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item :label="$t('member.create_time')" label-width="80">
+                  <el-form-item :label="$t('teacher.management.create_time')" label-width="80">
                     {{ dataForm.create_time }}
+                  </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                  <el-form-item :label="$t('teacher.management.condition')" label-width="80">
+                    {{ dataForm.condition.text }}
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col :span="6">
-                  <el-form-item :label="$t('member.avatar')" label-width="80">
+                  <el-form-item :label="$t('teacher.management.avatar')" label-width="80">
                     <el-avatar :size="30" :src="dataForm.avatar">
                       <img src="@/assets/images/default/circle.png"/>
                     </el-avatar>
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item :label="$t('member.nickname')" label-width="80">
+                  <el-form-item :label="$t('teacher.management.nickname')" label-width="80">
                     {{ dataForm.nickname }}
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item :label="$t('member.archive.sex')" label-width="80">
+                  <el-form-item :label="$t('teacher.management.archive.sex')" label-width="80">
                     <span v-if="dataForm.archive">
                       {{ dataForm.archive.sex.text }}
                     </span>
                   </el-form-item>
                 </el-col>
-                <el-col :span="6">
-                  <el-form-item :label="$t('member.archive.birthday')" label-width="80">
-                    <span v-if="dataForm.archive">
-                      {{ dataForm.archive.birthday }}
-                    </span>
-                  </el-form-item>
-                </el-col>
               </el-row>
               <el-row>
                 <el-col :span="6">
-                  <el-form-item :label="$t('member.username')" label-width="80">
+                  <el-form-item :label="$t('teacher.management.id_card_no')" label-width="80" v-if="dataForm.archive">
+                    {{ dataForm.archive.id_card_no }}
+                  </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                  <el-form-item :label="$t('teacher.management.username')" label-width="80">
                     {{ dataForm.username }}
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item :label="$t('member.archive.weixin')" label-width="80" v-if="dataForm.archive">
+                  <el-form-item :label="$t('teacher.management.archive.weixin')" label-width="80" v-if="dataForm.archive">
                     {{ dataForm.archive.weixin }}
                   </el-form-item>
                 </el-col>
-                <el-col :span="6">
-                  <el-form-item :label="$t('member.archive.address')" label-width="80" v-if="dataForm.archive">
-                    {{ dataForm.archive.address }}
-                  </el-form-item>
-                </el-col>
               </el-row>
               <el-row>
                 <el-col :span="6">
-                  <el-form-item :label="$t('member.red_envelope')" label-width="100">
-                    <span v-if="dataForm.asset">
-                      {{ dataForm.asset.red_envelope }}
-                    </span>
+                  <el-form-item :label="$t('teacher.management.archive.city')" label-width="80" v-if="dataForm.archive">
+                    {{ dataForm.archive.province_id.text }} {{ dataForm.archive.city_id.text }} {{ dataForm.archive.region_id.text }}
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item :label="$t('member.lollipop')" label-width="100">
-                    <span v-if="dataForm.asset">
-                      {{ dataForm.asset.lollipop }}
-                    </span>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item :label="$t('member.production')" label-width="100">
-                    <span v-if="dataForm.asset">
-                      {{ dataForm.asset.production }}
+                  <el-form-item :label="$t('teacher.management.archive.address')" label-width="100">
+                    <span v-if="dataForm.archive">
+                      {{ dataForm.archive.address }}
                     </span>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
-                <el-col :span="6">
-                  <el-button v-if="isAuth('module:member:freeze') && dataForm.is_freeze" :type="dataForm.is_freeze.value == 1 ? 'warning' : 'primary'" :icon="dataForm.is_freeze.value == 1 ? 'el-icon-s-help' : 'el-icon-help'" @click="freezeHandle(dataForm.id, dataForm.is_freeze.value)">
-                    <span v-if="dataForm.is_freeze.value == 1">
-                      {{ $t('member.freeze') }}
-                    </span>
-                    <span v-else>
-                      {{ $t('member.thaw') }}
-                    </span>
-                  </el-button>
-                </el-col>
                 <el-col :span="6">
                   <el-button v-if="isAuth('module:member:enable') && dataForm.status" :type="dataForm.status.value == 2 ? 'danger' : 'success'" :icon="dataForm.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(dataForm.id, dataForm.status.value)">
                     <span v-if="dataForm.status.value == 1">
@@ -125,43 +104,6 @@
                 </el-col>
               </el-row>
             </el-form>
-          </div>
-        </el-card>
-        <el-card class="box-card mt10" shadow="never">
-          <div slot="header" class="clearfix">
-            <span>{{ $t('organization.course_info') }}</span>
-          </div>
-          <div class="text item">
-            <el-table :data="dataForm.course" v-loading="dataListLoading" height="300">
-
-              <el-table-column prop="title" :label="$t('course.title')" width="200">
-              </el-table-column>
-
-              <el-table-column prop="title" :label="$t('course.title')" width="200">
-              </el-table-column>
-
-              <el-table-column prop="title" :label="$t('course.title')" width="200">
-              </el-table-column>
-
-              <el-table-column prop="title" :label="$t('course.title')" width="200">
-              </el-table-column>
-
-              <el-table-column prop="title" :label="$t('course.title')" width="200">
-              </el-table-column>
-
-              <el-table-column prop="title" :label="$t('course.title')" width="200">
-              </el-table-column>
-
-              <el-table-column :label="$t('common.handle')" fixed="right">
-                <template slot-scope="scope">
-                  <el-button v-if="isAuth('module:member:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_member_view', query: {id: scope.row.id}})">
-                    {{ $t('common.view') }}
-                  </el-button>
-
-
-                </template>
-              </el-table-column>
-            </el-table>
           </div>
         </el-card>
       </div>
@@ -180,7 +122,8 @@
         model: 'member',
         dataForm:
         {
-          id: 0
+          id: 0,
+          condition: ''
         },
         dataRule: {}
       };
@@ -206,40 +149,6 @@
             })
           }
         })
-      },
-      // 冻结（解冻）学员账户金额
-      freezeHandle (id, status) {
-        let message = '您确定要冻结当前学员的资产？'
-
-        if(1 == status)
-        {
-          message = '您确定要解冻当前学员的资产？'
-        }
-
-        this.$confirm(message, this.$t('common.prompt'), {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        }).then(() => {
-          this.$http({
-            url: this.$http.adornUrl('/'+this.model+'/freeze'),
-            method: 'post',
-            data: {id: id}
-          }).then(({data}) => {
-            if (data && data.status === 200) {
-              this.$message({
-                message: this.$t('common.handle_success'),
-                type: 'success',
-                duration: 1500,
-                onClose: () => {
-                  this.init()
-                }
-              })
-            } else {
-              this.$message.error(this.$t(data.message))
-            }
-          })
-        }).catch(() => {})
       },
       // 禁用（解禁）学员账户
       enableHandle (id, status) {

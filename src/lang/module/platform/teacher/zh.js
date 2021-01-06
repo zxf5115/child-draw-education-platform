@@ -50,4 +50,20 @@ export const teacher = {
       address: '详细地址',
     },
   },
+
+  recruitment: {
+    list: '招聘老师列表',
+    from: '招聘老师操作',
+    view: '招聘老师详情',
+    info: '招聘老师信息',
+
+    dividend_income: '分红收益',
+    dividend_income_total: '分红总收益',
+    buy_course_total: '购买系统课总人数',
+
+    buy_course_number: '购买系统课人数',
+    settlement_status: '结算状态',
+    settlement_time: '结算时间',
+    settlement_type: '结算方式',
+  }
 }

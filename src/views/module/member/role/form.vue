@@ -26,7 +26,7 @@
             <el-input v-model="dataForm.content" type="textarea" maxlength="200" show-word-limit :placeholder="$t('common.please_input')+$t('member.role.content')"></el-input>
           </el-form-item>
 
-          <el-form-item class="width_auto">
+          <!-- <el-form-item class="width_auto">
             <div style="margin-left:24px;">
               <el-checkbox
                 :indeterminate="isIndeterminate"
@@ -44,7 +44,7 @@
               :default-expand-all="false"
               show-checkbox>
             </el-tree>
-          </el-form-item>
+          </el-form-item> -->
 
           <el-form-item>
             <el-button v-if="isAuth('module:member:role:handle')" type="primary" @click="dataFormSubmit()">
@@ -125,7 +125,7 @@
                   if (data && data.status === 200) {
                     this.checkedMenu = this.menuListId.length === data.data.permission.length
 
-                    this.$refs.menuListTree.setCheckedKeys(data.data.permission)
+                    // this.$refs.menuListTree.setCheckedKeys(data.data.permission)
                   }
                 })
               }
@@ -144,7 +144,7 @@
                 'id': this.dataForm.id || undefined,
                 'title': this.dataForm.title,
                 'content': this.dataForm.content,
-                'menu_id': [].concat(this.$refs.menuListTree.getCheckedKeys(), this.$refs.menuListTree.getHalfCheckedKeys())
+                // 'menu_id': [].concat(this.$refs.menuListTree.getCheckedKeys(), this.$refs.menuListTree.getHalfCheckedKeys())
               })
             }).then(({data}) => {
               if (data && data.status === 200) {
@@ -195,7 +195,7 @@
       this.init();
     },
     mounted () {
-      this.loadMenuList();
+      // this.loadMenuList();
     },
   };
 </script>

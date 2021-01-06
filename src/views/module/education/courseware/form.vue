@@ -3,7 +3,7 @@
     <div class="admin_main_block">
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
-          <div>{{ $t('paper.from') }}</div>
+          <div>{{ $t('courseware.from') }}</div>
         </div>
 
         <div class="admin_main_block_right">
@@ -18,20 +18,27 @@
       <div class="admin_form_main">
         <el-form label-width="120px" ref="dataForm" :model="dataForm" :rules="dataRule">
 
-          <el-form-item :label="$t('paper.title')" prop="title">
-            <el-input :placeholder="$t('paper.title')" v-model="dataForm.title"></el-input>
+          <el-form-item :label="$t('courseware.title')" prop="title">
+            <el-input :placeholder="$t('common.please_input') + $t('courseware.title')" v-model="dataForm.title"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('paper.description')" prop="description">
-            <el-input type="textarea" :placeholder="$t('paper.description')" v-model="dataForm.description"></el-input>
+          <el-form-item :label="$t('courseware.description')" prop="description">
+            <el-input :placeholder="$t('common.please_input') + $t('courseware.description')" type="textarea" v-model="dataForm.description"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('paper.test_time')" prop="test_time">
-            <el-input-number :min="0" :max="120" :placeholder="$t('paper.test_time')" v-model="dataForm.test_time"></el-input-number>
+          <el-form-item :label="$t('courseware.is_permanent')" prop="is_permanent">
+            <el-radio-group v-model="dataForm.is_permanent" @change="showTimeLimit">
+              <el-radio :label="1">
+                {{ $t('courseware.permanent') }}
+              </el-radio>
+              <el-radio :label="2">
+                {{ $t('courseware.cycle') }}
+              </el-radio>
+            </el-radio-group>
           </el-form-item>
 
-          <el-form-item :label="$t('common.sort')" prop="sort">
-            <el-input-number :placeholder="$t('common.please_input')+$t('common.sort')" v-model="dataForm.sort"></el-input-number>
+          <el-form-item :class="isHidden ? 'display' : ''" :label="$t('courseware.time_limit')">
+            <el-date-picker format="yyyy-MM-dd" v-model="dataForm.valid_time" type="daterange" :range-separator="$t('common.to')" :start-placeholder="$t('common.start_time')" :end-placeholder="$t('common.end_time')"></el-date-picker>
           </el-form-item>
 
           <el-form-item>
@@ -57,23 +64,22 @@
     data()
     {
       return {
-        model: 'education/paper',
+        model: 'education/courseware',
+        isHidden: false,
         dataForm:
         {
           id: 0,
           title: '',
           description: '',
-          test_time: 0,
-          sort: 0,
+          is_permanent: 2,
+          valid_time: '',
         },
         dataRule:
         {
           title: [
-            { required: true, message: this.$t('paper.rules.title.require'), trigger: 'blur' }
-          ],
-          test_time: [
-            { required: true, message: this.$t('paper.rules.test_time.require'), trigger: 'blur' }
-          ],
+            { required: true, message: this.$t('courseware.rules.title.require'), trigger: 'blur' },
+            { min: 1, max: 20, message: this.$t('courseware.rules.title.length'), trigger: 'blur' }
+          ]
         }
       };
     },
@@ -89,15 +95,20 @@
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/education/paper/view/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/education/courseware/view/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.title       = data.data.title
-                this.dataForm.description = data.data.description
-                this.dataForm.test_time   = data.data.test_time
-                this.dataForm.sort        = data.data.sort
+                this.dataForm.title        = data.data.title
+                this.dataForm.description  = data.data.description
+                this.dataForm.is_permanent = data.data.is_permanent.value
+                this.dataForm.valid_time   = data.data.valid_time
+
+                if(this.dataForm.is_permanent == 1)
+                {
+                  this.isHidden = true
+                }
               }
             })
           }
@@ -108,14 +119,14 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/education/paper/handle`),
+              url: this.$http.adornUrl(`/education/courseware/handle`),
               method: 'post',
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
                 'title': this.dataForm.title,
                 'description': this.dataForm.description,
-                'test_time': this.dataForm.test_time,
-                'sort': this.dataForm.sort,
+                'is_permanent': this.dataForm.is_permanent,
+                'valid_time': this.dataForm.valid_time,
               })
             }).then(({data}) => {
               if (data && data.status === 200) {
@@ -128,9 +139,20 @@
           }
         })
       },
-      resetForm:function()
+      resetForm: function()
       {
         this.$refs['dataForm'].resetFields();
+      },
+      showTimeLimit: function(val)
+      {
+        if(1 == val)
+        {
+          this.isHidden = true
+        }
+        else
+        {
+          this.isHidden = false
+        }
       }
     },
     created(request)

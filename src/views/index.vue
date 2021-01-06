@@ -1,70 +1,88 @@
 <template>
-  <div class="qingwu">
+  <div class="qingwu color">
 
     <el-row :gutter="20">
-      <el-col :span="24" class="default_block_col">
-        <el-card shadow="hover" class="m-l-10-p-20">
-          用户统计
+      <el-col :span="6" class="default_block_col">
+        <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
+          <div>今日新增用户</div>
           <div class="unline"></div>
           <div class="default_total">
-            <ve-histogram :data="userData"></ve-histogram>
+            <font style="font-size:30px;">111</font>
+            <div class="unline"></div>
+            <div class="default_day_sale">用户总数：11111</div>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="6" class="default_block_col">
+        <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
+          <div>今日新增课程订单</div>
+          <div class="unline"></div>
+          <div class="default_total">
+            <font style="font-size:30px;">111</font>
+            <div class="unline"></div>
+            <div class="default_day_sale">课程订单总数：11111</div>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="6" class="default_block_col">
+        <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
+          <div>今日新增商品订单</div>
+          <div class="unline"></div>
+          <div class="default_total">
+            <font style="font-size:30px;">111</font>
+            <div class="unline"></div>
+            <div class="default_day_sale">商品订单总数：11111</div>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="6" class="default_block_col">
+        <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
+          <div>今日销售额（元）</div>
+          <div class="unline"></div>
+          <div class="default_total">
+            <font style="font-size:30px;">111</font>
+            <div class="unline"></div>
+            <div class="default_day_sale">销售总额：11111</div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="8" class="default_block_col">
+        <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
+          <div>红包提现审核</div>
+          <div class="unline"></div>
+          <div class="default_total">
+            <font style="font-size:30px;">111</font>
+            <div class="unline"></div>
+            <div class="default_day_sale blue right">去审核</div>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8" class="default_block_col">
+        <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
+          <div>收到投诉</div>
+          <div class="unline"></div>
+          <div class="default_total">
+            <font style="font-size:30px;">111</font>
+            <div class="unline"></div>
+            <div class="default_day_sale blue right">去查看</div>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8" class="default_block_col">
+        <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
+          <div>待发货订单</div>
+          <div class="unline"></div>
+          <div class="default_total">
+            <font style="font-size:30px;">111</font>
+            <div class="unline"></div>
+            <div class="default_day_sale blue right">去查看</div>
           </div>
         </el-card>
       </el-col>
     </el-row>
 
-    <el-row :gutter="20">
-      <el-col :span="12" class="default_block_col">
-        <el-card shadow="hover" class="m-l-10-p-20">
-          课程统计
-          <div class="unline"></div>
-          <div class="default_total">
-            <ve-pie :data="courseData"></ve-pie>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="12" class="default_block_col">
-        <el-card shadow="hover" class="m-l-10-p-20">
-          学习设备统计
-          <div class="unline"></div>
-          <div class="default_total">
-            <ve-ring :data="equipmentData"></ve-ring>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-
-    <el-row :gutter="20">
-      <el-col :span="12" class="default_block_col">
-        <el-card shadow="hover" class="m-l-10-p-20">
-          试题统计
-          <div class="unline"></div>
-          <div class="default_total">
-            <ve-funnel :data="questionData" :settings="questionSettings"></ve-funnel>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="12" class="default_block_col">
-        <el-card shadow="hover" class="m-l-10-p-20">
-          热门关键字
-          <div class="unline"></div>
-          <div class="default_total">
-            <ve-ring :data="keywordData" :settings="keywordSettings"></ve-ring>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-
-    <el-row :gutter="20">
-      <el-col :span="24" class="default_block_col">
-        <el-card shadow="hover" class="m-l-10-p-20">
-          学习时长统计
-          <div class="unline"></div>
-          <!-- 图表 -->
-          <ve-line :data="studyData" :settings="studySettings"></ve-line>
-        </el-card>
-      </el-col>
-    </el-row>
   </div>
 </template>
 
@@ -130,93 +148,8 @@
       };
     },
     methods: {
-      getUserDataData () {
-        this.dataListLoading = true
-        this.$http({
-          url: this.$http.adornUrl('/index/user'),
-          method: 'post',
-          params: this.$http.adornParams({})
-        }).then(({data}) => {
-          if (data && data.status === 200)
-          {
-            this.userData.rows = data.data
-          }
-        })
-      },
-      getCourseDataData () {
-        this.dataListLoading = true
-        this.$http({
-          url: this.$http.adornUrl('/index/course'),
-          method: 'post',
-          params: this.$http.adornParams({})
-        }).then(({data}) => {
-          if (data && data.status === 200)
-          {
-            this.courseData.rows = data.data
-          }
-        })
-      },
-      getKeywordDataData () {
-        this.dataListLoading = true
-        this.$http({
-          url: this.$http.adornUrl('/index/keyword'),
-          method: 'post',
-          params: this.$http.adornParams({})
-        }).then(({data}) => {
-          if (data && data.status === 200)
-          {
-            this.keywordData.rows = data.data
-          }
-        })
-      },
-      getEquipmentData () {
-        this.dataListLoading = true
-        this.$http({
-          url: this.$http.adornUrl('/index/equipment'),
-          method: 'post',
-          params: this.$http.adornParams({})
-        }).then(({data}) => {
-          if (data && data.status === 200)
-          {
-            this.equipmentData.rows  = data.data
-          }
-        })
-      },
-      getQuestionData () {
-        this.dataListLoading = true
-        this.$http({
-          url: this.$http.adornUrl('/index/question'),
-          method: 'post',
-          params: this.$http.adornParams({})
-        }).then(({data}) => {
-          if (data && data.status === 200)
-          {
-            this.questionData.rows  = data.data
-          }
-        })
-      },
-      getStudyData () {
-        this.dataListLoading = true
-        this.$http({
-          url: this.$http.adornUrl('/index/study'),
-          method: 'post',
-          params: this.$http.adornParams({})
-        }).then(({data}) => {
-          if (data && data.status === 200)
-          {
-            this.studyData.rows  = data.data
-          }
-        })
-      },
-
     },
     mounted(){
-      this.getUserDataData();
-      this.getCourseDataData();
-      this.getKeywordDataData();
-      this.getEquipmentData();
-      this.getQuestionData();
-      this.getStudyData();
     }
   };
 </script>

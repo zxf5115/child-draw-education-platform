@@ -33,7 +33,7 @@
           <el-table-column prop="username" :label="$t('member.username')"  width="100">
           </el-table-column>
 
-          <el-table-column :label="$t('member.info')" width="250">
+          <el-table-column :label="$t('member.info')" width="280">
             <template slot-scope="scope">
               <dl class="table_dl">
                 <dt>

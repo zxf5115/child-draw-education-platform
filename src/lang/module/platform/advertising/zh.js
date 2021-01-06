@@ -11,7 +11,7 @@ export const advertising = {
   url: '广告资源',
   type: '广告类型',
   rules: {
-    location_id: {
+    position_id: {
       require: '广告位标题不能为空',
     },
     title: {

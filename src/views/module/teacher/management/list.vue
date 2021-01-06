@@ -58,7 +58,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('teacher.management.info')" width="250">
+          <el-table-column :label="$t('teacher.management.info')" width="280">
             <template slot-scope="scope">
               <dl class="table_dl">
                 <dt>
@@ -82,7 +82,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('teacher.management.archive.city')" width="150">
+          <el-table-column :label="$t('teacher.management.archive.city')" width="240">
             <template slot-scope="scope" v-if="scope.row.archive">
               {{ scope.row.archive.province_id.text }} {{ scope.row.archive.city_id.text }} {{ scope.row.archive.region_id.text }}
             </template>

@@ -132,7 +132,7 @@
             <span>{{ $t('organization.course_info') }}</span>
           </div>
           <div class="text item">
-            <el-table :data="dataForm.course" v-loading="dataListLoading" height="300">
+            <el-table :data="dataForm.order" v-loading="dataListLoading" height="300">
 
               <el-table-column prop="title" :label="$t('course.title')" width="200">
               </el-table-column>

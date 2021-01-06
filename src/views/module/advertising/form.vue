@@ -18,8 +18,8 @@
       <div class="admin_form_main">
         <el-form label-width="100px" ref="dataForm" :model="dataForm" :rules="dataRule">
 
-          <el-form-item :label="$t('advertising.position.title')" prop="location_id">
-            <el-select v-model="dataForm.location_id" :placeholder="$t('common.please_select')+$t('advertising.position.title')">
+          <el-form-item :label="$t('advertising.position.title')" prop="position_id">
+            <el-select v-model="dataForm.position_id" :placeholder="$t('common.please_select')+$t('advertising.position.title')">
               <el-option v-for="(v,k) in position" :label="v.title" :key="k" :value="v.id"></el-option>
             </el-select>
           </el-form-item>
@@ -73,7 +73,7 @@
         dataForm:
         {
           id: 0,
-          location_id: '',
+          position_id: '',
           title: '',
           picture: '',
           url: '',
@@ -82,8 +82,8 @@
         },
         dataRule:
         {
-          location_id: [
-            { required: true, message: this.$t('advertising.rules.location_id.require'), trigger: 'blur' },
+          position_id: [
+            { required: true, message: this.$t('advertising.rules.position_id.require'), trigger: 'blur' },
           ],
           title: [
             { required: true, message: this.$t('advertising.rules.title.require'), trigger: 'blur' },
@@ -107,7 +107,7 @@
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.location_id      = data.data.location_id
+                this.dataForm.position_id      = data.data.position_id
                 this.dataForm.title            = data.data.title
                 this.dataForm.picture          = data.data.picture
                 this.dataForm.url              = data.data.url
@@ -127,7 +127,7 @@
               method: 'post',
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
-                'location_id': this.dataForm.location_id,
+                'position_id': this.dataForm.position_id,
                 'title': this.dataForm.title,
                 'picture': this.dataForm.picture,
                 'url': this.dataForm.url,
@@ -178,7 +178,7 @@
     created() {
       this.init();
 
-      this.dataForm.location_id = this.$route.params.location_id;
+      this.dataForm.position_id = this.$route.params.position_id;
 
       // 要保证取到
       this.upload_headers.Authorization = 'Bearer ' + localStorage.getItem('token');

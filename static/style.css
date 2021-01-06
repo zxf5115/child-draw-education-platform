@@ -410,55 +410,28 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,
     clear: both;
 }
 
-/* 用户订单号搜索框里 */
-.user_content_blcok_title .order_search .el-input.is-active .el-input__inner, .el-input__inner:focus{
-    border-color: #ccc;
+.display {
+    display: none;
 }
 
-/* 订单备注 */
-.address_chose .remark .el-textarea__inner:focus{
-    border-color: #ccc;
+.color .right {
+    text-align: right;
 }
-
-
-.red {
-    color: red;
-}
-.green {
-    color: green;
-}
-
-
-.color .label {
-    font-size: 13px;
-}
-.color .mt10 {
-    margin: 10px 0;
-}
-.color .label .ml10 {
-    margin-left: 10px;
-}
-.color .label .mr10 {
-    margin-right: 10px;
-}
-.color .label .m10 {
-    margin-right: 10px;
-}
-.color .label .red, .color .red{
+.color .red{
     color: #ff0000;
 }
-.color .label .blue, .color .blue{
+.color .blue{
     color: #1577fe;
 }
-.color .label .black, .color .black{
+.color .black{
     color: #000000;
 }
-.color .label .green1, .color .green1{
+.color .green1{
     color: #00978b;
 }
-.color .label .green2, .color .green2{
+.color .green2{
     color: #006633;
 }
-.color .label .purple, .color .purple{
+.color .purple{
     color: #cc00ff;
 }

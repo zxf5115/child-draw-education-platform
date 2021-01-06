@@ -21,9 +21,7 @@ import  {teacher}  from './module/platform/teacher/zh'
 
 import  {advertising}  from './module/platform/advertising/zh'
 import  {course}  from './module/platform/education/course/zh'
-import  {graduation}  from './module/platform/education/graduation/zh'
-import  {homework}  from './module/platform/education/homework/zh'
-import  {paper}  from './module/platform/education/paper/zh'
+import  {courseware}  from './module/platform/education/courseware/zh'
 import  {keyword}  from './module/platform/keyword/zh'
 
 
@@ -97,24 +95,14 @@ export default {
     ...course
   },
 
+  // 课件
+  courseware: {
+    ...courseware
+  },
+
   // 班级
   squad: {
     ...squad
-  },
-
-  // 结业
-  graduation: {
-    ...graduation
-  },
-
-  // 作业
-  homework: {
-    ...homework
-  },
-
-  // 试卷
-  paper: {
-    ...paper
   },
 
   keyword: {

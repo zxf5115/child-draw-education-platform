@@ -42,8 +42,8 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="location_id" :label="$t('advertising.position.title')">
-            <template slot-scope="scope">
+          <el-table-column prop="position_id" :label="$t('advertising.position.title')">
+            <template slot-scope="scope" v-if="scope.row.position">
               {{ scope.row.position.title }}
             </template>
           </el-table-column>
@@ -89,12 +89,12 @@
     data() {
       return {
         model: 'advertising',
-        location_id: 0,
+        position_id: 0,
         dataForm: []
       };
     },
     created() {
-      this.dataForm.location_id = this.$route.query.location_id;
+      this.dataForm.position_id = this.$route.query.position_id;
       this.getDataList()
     }
   };

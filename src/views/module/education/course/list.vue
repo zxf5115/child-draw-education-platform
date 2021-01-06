@@ -8,21 +8,6 @@
               {{ $t('common.create') }}
             </el-button>
           </div>
-          <div>
-            <el-button v-if="isAuth('module:education:course:label:list')" icon="el-icon-price-tag" @click="$router.push({name: 'module_education_course_label_list'})">
-              {{ $t('course.course_label') }}
-            </el-button>
-          </div>
-          <div>
-            <el-button v-if="isAuth('module:education:course:point:question:list')" icon="el-icon-price-tag" @click="$router.push({name: 'module_education_course_point_question_list'})">
-              {{ $t('course.question_info') }}
-            </el-button>
-          </div>
-          <div>
-            <el-button v-if="isAuth('module:education:course:intensify:list')" icon="el-icon-price-tag" @click="$router.push({name: 'module_education_course_intensify_list'})">
-              {{ $t('course.course_intensify') }}
-            </el-button>
-          </div>
         </div>
         <div class="admin_main_block_right">
           <div>
@@ -117,7 +102,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('common.handle')" fixed="right" width="680px">
+          <el-table-column :label="$t('common.handle')" fixed="right" width="320px">
             <template slot-scope="scope">
               <el-button v-if="isAuth('module:education:course:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_education_course_form', query: {id: scope.row.id}})">
                 {{ $t('common.update') }}
@@ -129,14 +114,6 @@
 
               <el-button v-if="isAuth('module:education:course:point:list')" icon="el-icon-copy-document" @click="$router.push({name: 'module_education_course_point_list', query: {course_id: scope.row.id}})">
                 {{ $t('course.course_point') }}
-              </el-button>
-
-              <el-button v-if="isAuth('module:education:course:resource:category:list')" icon="el-icon-copy-document" @click="$router.push({name: 'module_education_course_resource_category_list', query: {course_id: scope.row.id}})">
-                {{ $t('course.resource.resource_category') }}
-              </el-button>
-
-              <el-button v-if="isAuth('module:education:course:intensify:category:list')" icon="el-icon-copy-document" @click="$router.push({name: 'module_education_course_intensify_category_list', query: {course_id: scope.row.id}})">
-                {{ $t('course.intensify.intensify_category') }}
               </el-button>
 
               <el-button v-if="isAuth('module:education:course:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">

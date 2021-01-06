@@ -3,12 +3,12 @@
     <div class="admin_main_block">
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
-          <div>{{ $t('member.from') }}</div>
+          <div>{{ $t('teacher.recruitment.from') }}</div>
         </div>
 
         <div class="admin_main_block_right">
           <div>
-            <el-button icon="el-icon-back" @click="$router.go(-1)">
+            <el-button icon="el-icon-back" @click="$router.push({name: 'module_teacher_recruitment_list'})">
               {{ $t('common.return') }}
             </el-button>
           </div>
@@ -18,7 +18,7 @@
       <div class="admin_form_main">
         <el-form label-width="100px" ref="dataForm" :model="dataForm" :rules="dataRule">
 
-          <el-form-item :label="$t('member.avatar')" prop="avatar">
+          <el-form-item :label="$t('teacher.management.avatar')" prop="avatar">
             <el-upload class="avatar-uploader" :action="this.$http.adornUrl('/file/picture')" :show-file-list="false" :headers="upload_headers" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
               <img v-if="dataForm.avatar" :src="dataForm.avatar" class="avatar-upload">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -29,35 +29,37 @@
             <el-input v-model="dataForm.username" :placeholder="$t('common.please_input') + $t('member.username')"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('common.sms_notification')" prop="sms_notification">
-            <el-checkbox v-model="dataForm.sms_notification">
-              {{ $t('common.send_sms_notification') }}
-            </el-checkbox>
+          <el-form-item :label="$t('teacher.management.nickname')" prop="nickname">
+            <el-input v-model="dataForm.nickname" :placeholder="$t('common.please_input') + $t('teacher.management.nickname')"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('member.nickname')" prop="nickname">
-            <el-input v-model="dataForm.nickname" :placeholder="$t('common.please_input') + $t('member.nickname')"></el-input>
+          <el-form-item :label="$t('teacher.management.id_card_no')" prop="id_card_no">
+            <el-input v-model="dataForm.id_card_no" :placeholder="$t('common.please_input') + $t('teacher.management.id_card_no')"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('member.mobile')" prop="mobile">
-            <el-input v-model="dataForm.mobile" :placeholder="$t('common.please_input') + $t('member.mobile')"></el-input>
+          <el-form-item :label="$t('member.archive.sex')" class="width_auto">
+            <el-radio-group v-model="dataForm.sex">
+              <el-radio :label="1">{{ $t('common.man') }}</el-radio>
+              <el-radio :label="2">{{ $t('common.woman') }}</el-radio>
+              <el-radio :label="3">{{ $t('common.secrecy') }}</el-radio>
+            </el-radio-group>
           </el-form-item>
 
-          <el-form-item :label="$t('member.email')" prop="email">
-            <el-input v-model="dataForm.email" :placeholder="$t('common.please_input') + $t('member.email')"></el-input>
+          <el-form-item :label="$t('member.archive.weixin')" prop="weixin">
+            <el-input v-model="dataForm.weixin" :placeholder="$t('common.please_input')+$t('member.archive.weixin')"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('member.role.title')" class="width_auto">
-            <el-checkbox-group v-model="dataForm.role_id" :max=1>
-              <el-checkbox v-for="(v,k) in roleList" :key="k" :label="v.id">
-                {{v.title}}
-              </el-checkbox>
-            </el-checkbox-group>
+          <form-area ref="area" :province_id="dataForm.province_id" :city_id="dataForm.city_id" :region_id="dataForm.region_id" @setProvinceInfo="setProvinceInfo" @setCityInfo="setCityInfo" @setAreaInfo="setAreaInfo"></form-area>
+
+          <el-form-item :label="$t('member.archive.address')" prop="address">
+            <el-input type="textarea" v-model="dataForm.address" :placeholder="$t('common.please_input')+$t('member.archive.address')"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('member.status')" prop="status">
-            <el-switch v-model="dataForm.status" active-value="1" :active-text="$t('common.enable')" inactive-value="2" :inactive-text="$t('common.disable')">
-            </el-switch>
+          <el-form-item :label="$t('teacher.management.qr_code')" prop="qr_code">
+            <el-upload class="avatar-uploader" :action="this.$http.adornUrl('/file/picture')" :show-file-list="false" :headers="upload_headers" :on-success="handleQrCodeSuccess" :before-upload="beforeAvatarUpload">
+              <img v-if="dataForm.qr_code" :src="dataForm.qr_code" class="avatar-upload">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
           </el-form-item>
 
           <el-form-item>
@@ -76,24 +78,31 @@
 
 <script>
   import common from '@/views/common/base'
+  import formArea from '@/views/common/component/form-area'
   export default {
     extends: common,
+    components: {
+      formArea
+    },
     data() {
       return {
-        model: 'member',
+        model: 'teacher/recruitment',
         roleList: [],
         upload_headers:{},
         dataForm:
         {
           id: 0,
-          role_id : [],
           avatar: '',
           username: '',
           nickname: '',
-          email: '',
-          mobile: '',
-          status: '1',
-          sms_notification: true,
+          id_card_no: '',
+          sex: '',
+          weixin: '',
+          province_id : '',
+          city_id : '',
+          region_id : '',
+          address: '',
+          qr_code: '',
         },
         dataRule:
         {
@@ -117,17 +126,22 @@
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/member/view/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/teacher/recruitment/view/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.avatar   = data.data.avatar
-                this.dataForm.username = data.data.username
-                this.dataForm.nickname = data.data.nickname
-                this.dataForm.email    = data.data.email
-                this.dataForm.mobile   = data.data.mobile
-                this.dataForm.status   = data.data.status.value + ''
+                this.dataForm.avatar      = data.data.avatar
+                this.dataForm.username    = data.data.username
+                this.dataForm.nickname    = data.data.nickname
+                this.dataForm.qr_code     = data.data.qr_code
+                this.dataForm.id_card_no  = data.data.archive.id_card_no || ''
+                this.dataForm.sex         = data.data.archive.sex.value || ''
+                this.dataForm.weixin      = data.data.archive.weixin || ''
+                this.dataForm.province_id = data.data.archive.province_id.value || ''
+                this.dataForm.city_id     = data.data.archive.city_id.value || ''
+                this.dataForm.region_id   = data.data.archive.region_id.value || ''
+                this.dataForm.address     = data.data.archive.address || ''
               }
             })
           }
@@ -138,18 +152,21 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/member/handle`),
+              url: this.$http.adornUrl(`/teacher/recruitment/handle`),
               method: 'post',
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
-                'role_id': this.dataForm.role_id,
                 'avatar': this.dataForm.avatar,
                 'username': this.dataForm.username,
                 'nickname': this.dataForm.nickname,
-                'mobile': this.dataForm.mobile,
-                'email': this.dataForm.email,
-                'status': this.dataForm.status,
-                'sms_notification': this.dataForm.sms_notification,
+                'id_card_no': this.dataForm.id_card_no,
+                'sex': this.dataForm.sex,
+                'weixin': this.dataForm.weixin,
+                'province_id': this.$refs.area.province_id,
+                'city_id': this.$refs.area.city_id,
+                'region_id': this.$refs.area.region_id,
+                'address': this.dataForm.address,
+                'qr_code': this.dataForm.qr_code,
               })
             }).then(({data}) => {
               if (data && data.status === 200) {
@@ -162,17 +179,14 @@
           }
         })
       },
-      loadRoleList () {
-        this.$http({
-          url: this.$http.adornUrl('/member/role/select'),
-          method: 'get'
-        }).then(({data}) => {
-          if (data && data.status === 200) {
-            this.roleList = data.data
-          } else {
-            this.$message.error(this.$t(data.message))
-          }
-        })
+      setProvinceInfo (id) {
+        this.dataForm.province_id = id
+      },
+      setCityInfo (id) {
+        this.dataForm.city_id = id
+      },
+      setAreaInfo (id) {
+        this.dataForm.region_id = id
       },
       resetForm:function()
       {
@@ -180,6 +194,9 @@
       },
       handleAvatarSuccess(res, file) {
         this.dataForm.avatar = res.data;
+      },
+      handleQrCodeSuccess(res, file) {
+        this.dataForm.qr_code = res.data;
       },
       beforeAvatarUpload(file) {
         const isPicture = (file.type === 'image/jpeg' || file.type === 'image/png');
@@ -202,9 +219,6 @@
 
       // 要保证取到
       this.upload_headers.Authorization = 'Bearer ' + localStorage.getItem('token');
-    },
-    mounted () {
-      this.loadRoleList();
-    },
+    }
   };
 </script>

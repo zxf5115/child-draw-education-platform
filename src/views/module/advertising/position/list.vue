@@ -61,11 +61,11 @@
                 {{ $t('common.update') }}
               </el-button>
 
-              <el-button v-if="isAuth('module:advertising:list')" type="info" icon="el-icon-search" @click="$router.push({name: 'module_advertising_list', query: {location_id: scope.row.id}})">
+              <el-button v-if="isAuth('module:advertising:list')" type="info" icon="el-icon-search" @click="$router.push({name: 'module_advertising_list', query: {position_id: scope.row.id}})">
                 {{ $t('advertising.view') }}
               </el-button>
 
-              <el-button v-if="isAuth('module:advertising:form') && scope.row.is_open.value == 1" type="success" icon="el-icon-plus" @click="$router.push({name: 'module_advertising_form', query: {location_id: scope.row.id}})" >
+              <el-button v-if="isAuth('module:advertising:form') && scope.row.is_open.value == 1" type="success" icon="el-icon-plus" @click="$router.push({name: 'module_advertising_form', query: {position_id: scope.row.id}})" >
                 {{ $t('advertising.create') }}
               </el-button>
 

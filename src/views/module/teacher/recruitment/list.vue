@@ -4,8 +4,8 @@
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
           <div>
-            <router-link :to="{name: 'module_teacher_management_form'}">
-              <el-button v-if="isAuth('module:teacher:management:form')" type="success" icon="el-icon-plus">
+            <router-link :to="{name: 'module_teacher_recruitment_form'}">
+              <el-button v-if="isAuth('module:teacher:recruitment:form')" type="success" icon="el-icon-plus">
                 {{ $t('common.create') }}
               </el-button>
             </router-link>
@@ -13,7 +13,7 @@
         </div>
         <div class="admin_main_block_right">
           <div>
-            <el-button v-if="isAuth('module:teacher:management:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle()">
+            <el-button v-if="isAuth('module:teacher:recruitment:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle()">
               {{ $t('common.batch_delete') }}
             </el-button>
           </div>
@@ -58,7 +58,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('teacher.management.info')" width="250">
+          <el-table-column :label="$t('teacher.management.info')" width="280">
             <template slot-scope="scope">
               <dl class="table_dl">
                 <dt>
@@ -82,7 +82,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('teacher.management.archive.city')" width="150">
+          <el-table-column :label="$t('teacher.management.archive.city')" width="240">
             <template slot-scope="scope" v-if="scope.row.archive">
               {{ scope.row.archive.province_id.text }} {{ scope.row.archive.city_id.text }} {{ scope.row.archive.region_id.text }}
             </template>
@@ -102,11 +102,11 @@
 
           <el-table-column :label="$t('common.handle')" fixed="right" width="380">
             <template slot-scope="scope">
-              <el-button v-if="isAuth('module:teacher:management:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_teacher_management_view', query: {id: scope.row.id}})">
+              <el-button v-if="isAuth('module:teacher:recruitment:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_teacher_recruitment_view', query: {id: scope.row.id}})">
                 {{ $t('common.view') }}
               </el-button>
 
-              <el-button v-if="isAuth('module:teacher:management:enable')" :type="scope.row.status.value == 2 ? 'danger' : 'success'" :icon="scope.row.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(scope.row.id, scope.row.status.value)">
+              <el-button v-if="isAuth('module:teacher:recruitment:enable')" :type="scope.row.status.value == 2 ? 'danger' : 'success'" :icon="scope.row.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(scope.row.id, scope.row.status.value)">
                 <span v-if="scope.row.status.value == 1">
                   {{ $t('member.enable') }}
                 </span>
@@ -115,11 +115,11 @@
                 </span>
               </el-button>
 
-              <el-button v-if="isAuth('module:teacher:management:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_teacher_management_form', query: {id: scope.row.id}})">
+              <el-button v-if="isAuth('module:teacher:recruitment:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_teacher_recruitment_form', query: {id: scope.row.id}})">
                 {{ $t('common.update') }}
               </el-button>
 
-              <el-button v-if="isAuth('module:teacher:management:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
+              <el-button v-if="isAuth('module:teacher:recruitment:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
                 {{ $t('common.delete') }}
               </el-button>
             </template>
