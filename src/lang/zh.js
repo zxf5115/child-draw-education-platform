@@ -19,6 +19,9 @@ import  {squad}  from './module/platform/organization/squad/zh'
 import  {member}  from './module/platform/member/zh'
 import  {teacher}  from './module/platform/teacher/zh'
 
+import  {production}  from './module/platform/production/zh'
+import  {template}  from './module/platform/template/zh'
+
 import  {advertising}  from './module/platform/advertising/zh'
 import  {course}  from './module/platform/education/course/zh'
 import  {courseware}  from './module/platform/education/courseware/zh'
@@ -83,6 +86,16 @@ export default {
   // 学员
   member: {
     ...member
+  },
+
+  // 作品
+  production: {
+    ...production
+  },
+
+  // 模板
+  template: {
+    ...template
   },
 
   // 老师

@@ -79,6 +79,7 @@ export const member = {
     age: '宝宝年龄',
     weixin: '微信号',
     birthday: '宝宝生日',
+    city: '所在城市',
     area: '地区',
     address: '详细地址',
 

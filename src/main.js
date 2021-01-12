@@ -36,6 +36,9 @@ Vue.component(ElTreeGrid.name,ElTreeGrid)
 Vue.config.productionTip = false
 
 
+import audio from 'vue-mobile-audio'
+Vue.use(audio)
+
 // 跳转后返回顶部
 router.afterEach(() => {
     window.scrollTo(0,0);

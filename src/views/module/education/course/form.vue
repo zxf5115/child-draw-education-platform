@@ -16,33 +16,327 @@
       </div>
 
       <div class="admin_form_main">
-        <el-tabs type="border-card">
-          <el-tab-pane :label="$t('course.basic_info')">
-            <basic />
-          </el-tab-pane>
-          <!-- <el-tab-pane v-if="id > 0" :label="$t('course.resource_info')" :lazy="true">
-            <resource :id="id"/>
-          </el-tab-pane> -->
-        </el-tabs>
+        <el-form label-width="120px" ref="dataForm" :model="dataForm" :rules="dataRule">
+
+          <el-form-item :label="$t('course.title')" prop="title">
+            <el-input v-model="dataForm.title" :placeholder="$t('common.please_input')+$t('course.title')"></el-input>
+          </el-form-item>
+
+          <el-form-item :label="$t('courseware.title')" prop="courseware_id">
+            <el-select v-model="dataForm.courseware_id" :placeholder="$t('common.please_select')+$t('courseware.title')">
+              <el-option v-for="(v,k) in coursewareList" :label="v.title" :key="k" :value="v.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item :label="$t('course.semester')" prop="semester">
+            <el-input-number v-model="dataForm.semester" :min="1"></el-input-number>
+          </el-form-item>
+
+          <el-form-item :label="$t('course.present.title')" prop="present_id">
+            <el-select v-model="dataForm.present_id" :placeholder="$t('common.please_select')+$t('course.present.title')">
+              <el-option v-for="(v,k) in presentList" :label="v.title" :key="k" :value="v.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item :label="$t('course.description')" prop="description">
+            <el-input type="textarea" rows="1" v-model="dataForm.description" :placeholder="$t('common.please_input')+$t('course.description')"></el-input>
+          </el-form-item>
+
+          <el-form-item :label="$t('course.apply_time')" prop="apply_time">
+            <el-date-picker format="yyyy-MM-dd" v-model="dataForm.apply_time" type="daterange" :range-separator="$t('common.to')" :start-placeholder="$t('common.start_time')" :end-placeholder="$t('common.end_time')"></el-date-picker>
+          </el-form-item>
+
+          <el-form-item :label="$t('course.course_start_time')" prop="course_start_time">
+            <el-date-picker format="yyyy-MM-dd" v-model="dataForm.course_start_time" type="date" :placeholder="$t('common.please_select')+$t('course.course_start_time')">
+            </el-date-picker>
+          </el-form-item>
+
+          <el-form-item :label="$t('course.real_price')" prop="real_price">
+            <el-input-number v-model="dataForm.real_price" :min="0" :precision="2">
+            </el-input-number>
+          </el-form-item>
+
+          <el-form-item :label="$t('course.line_price')" prop="line_price">
+            <el-input-number v-model="dataForm.line_price" :min="0" :precision="2">
+            </el-input-number>
+          </el-form-item>
+
+          <el-form-item :label="$t('course.class_size')" prop="class_size">
+            <el-input-number v-model="dataForm.class_size" :min="1">
+            </el-input-number>
+          </el-form-item>
+
+          <el-form-item :label="$t('course.unlock.title')" prop="unlock_id">
+            <el-select v-model="dataForm.unlock_id" :placeholder="$t('common.please_select')+$t('course.unlock.title')">
+              <el-option v-for="(v,k) in unlockList" :label="v.title" :key="k" :value="v.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item class="mavon" prop="content" :label="$t('course.content')">
+            <div id="content"></div>
+          </el-form-item>
+
+          <el-form-item class="mavon" prop="plan" :label="$t('course.plan')">
+            <div id="plan"></div>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button v-if="isAuth('module:member:handle')" type="primary" @click="dataFormSubmit()">
+              {{ $t('common.confirm') }}
+            </el-button>
+            <el-button @click="resetForm()">
+              {{ $t('common.reset') }}
+            </el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import Basic from '@/components/Education/Course/Basic'
-  import Resource from '@/components/Education/Course/Resource'
+  import common from '@/views/common/base'
+  import Vditor from "vditor"
+  import "vditor/dist/index.css"
   export default {
-    components: { Basic, Resource },
+    extends: common,
+    components: {
+      Vditor
+    },
     data() {
       return {
-        step: '0',
-        id: 0,
-      }
+        model: 'education/course',
+        upload_headers:{},
+        coursewareList: [],
+        presentList: [],
+        unlockList: [],
+        contentEditor: '',
+        planEditor: '',
+        dataForm:
+        {
+          id: 0,
+          courseware_id : '',
+          present_id : '',
+          unlock_id : '',
+          title: '',
+          semester : 1,
+          description: '',
+          apply_time: '',
+          course_start_time: '',
+          real_price: 0,
+          line_price: 0,
+          class_size: 1,
+        },
+        dataRule:
+        {
+          courseware_id: [
+            { required: true, message: this.$t('course.rules.courseware_id.require'), trigger: 'blur' },
+          ],
+          title: [
+            { required: true, message: this.$t('course.rules.title.require'), trigger: 'blur' },
+          ],
+          semester: [
+            { required: true, message: this.$t('course.rules.semester.require'), trigger: 'blur' },
+          ],
+          apply_time: [
+            { required: true, message: this.$t('course.rules.apply_time.require'), trigger: 'blur' },
+          ],
+          course_start_time: [
+            { required: true, message: this.$t('course.rules.course_start_time.require'), trigger: 'blur' },
+          ],
+          line_price: [
+            { required: true, message: this.$t('course.rules.line_price.require'), trigger: 'blur' },
+          ],
+          real_price: [
+            { required: true, message: this.$t('course.rules.real_price.require'), trigger: 'blur' },
+          ],
+          class_size: [
+            { required: true, message: this.$t('course.rules.class_size.require'), trigger: 'blur' },
+          ],
+        }
+      };
+    },
+    methods: {
+      init ()
+      {
+        let query = this.$route.query
+        let id = query.id
+
+        this.dataForm.id = id || 0
+        this.$nextTick(() => {
+          this.$refs['dataForm'].resetFields()
+          if (this.dataForm.id) {
+            this.$http({
+              url: this.$http.adornUrl(`/education/course/view/${this.dataForm.id}`),
+              method: 'get',
+              params: this.$http.adornParams()
+            }).then(({data}) => {
+              if (data && data.status === 200) {
+                this.dataForm.courseware_id     = data.data.courseware_id
+                this.dataForm.present_id        = data.data.present_id
+                this.dataForm.unlock_id         = data.data.unlock_id
+                this.dataForm.title             = data.data.title
+                this.dataForm.semester          = data.data.semester.value
+                this.dataForm.description       = data.data.description
+                this.dataForm.apply_time        = data.data.apply_time
+                this.dataForm.course_start_time = data.data.course_start_time
+                this.dataForm.real_price        = data.data.real_price
+                this.dataForm.line_price        = data.data.line_price
+                this.dataForm.class_size        = data.data.class_size
+
+                if(data.data.detail)
+                {
+                  this.contentEditor.setValue(data.data.detail.content)
+                  this.planEditor.setValue(data.data.detail.plan)
+                }
+              }
+            })
+          }
+        })
+      },
+      // 表单提交
+      dataFormSubmit () {
+        this.$refs['dataForm'].validate((valid) => {
+          if (valid) {
+            this.$http({
+              url: this.$http.adornUrl(`/education/course/handle`),
+              method: 'post',
+              data: this.$http.adornData({
+                'id': this.dataForm.id || undefined,
+                'courseware_id': this.dataForm.courseware_id,
+                'present_id': this.dataForm.present_id,
+                'unlock_id': this.dataForm.unlock_id,
+                'title': this.dataForm.title,
+                'semester': this.dataForm.semester,
+                'description': this.dataForm.description,
+                'apply_time': this.dataForm.apply_time,
+                'course_start_time': this.dataForm.course_start_time,
+                'real_price': this.dataForm.real_price,
+                'line_price': this.dataForm.line_price,
+                'class_size': this.dataForm.class_size,
+                'content': this.contentEditor.getValue(),
+                'plan': this.planEditor.getValue(),
+              })
+            }).then(({data}) => {
+              if (data && data.status === 200) {
+                this.$message.success(this.$t('common.handle_success'));
+                this.$router.go(-1);
+              } else {
+                this.$message.error(this.$t(data.message))
+              }
+            })
+          }
+        })
+      },
+      resetForm:function()
+      {
+        this.$refs['dataForm'].resetFields();
+      },
+      initContentVditor () {
+        this.contentEditor = new Vditor("content",{
+          multiple: false,
+          height: 400,
+          "mode": "sv",
+          "preview": {
+            "mode": "both"
+          },
+          toolbarConfig:{
+            pin:true
+          },
+          cache:{
+            enable:false
+          },
+          upload: {
+            accept: 'image/*, .mp3, .wav, .mov, .mp4',
+            token: 'test',
+            headers: {
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            url: this.$http.adornUrl('/file/course')
+          },
+        })
+      },
+      initPlanVditor () {
+        this.planEditor = new Vditor("plan",{
+          multiple: false,
+          height: 400,
+          "mode": "sv",
+          "preview": {
+            "mode": "both"
+          },
+          toolbarConfig:{
+            pin:true
+          },
+          cache:{
+            enable:false
+          },
+          upload: {
+            accept: 'image/*, .mp3, .wav, .mov, .mp4',
+            token: 'test',
+            headers: {
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            url: this.$http.adornUrl('/file/course')
+          },
+        })
+      },
+      loadCoursewareList () {
+        this.$http({
+          url: this.$http.adornUrl('/education/courseware/select'),
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.status === 200) {
+            this.coursewareList = data.data
+          } else {
+            this.$message.error(this.$t(data.message))
+          }
+        })
+      },
+      loadPresentList () {
+        this.$http({
+          url: this.$http.adornUrl('/education/course/present/select'),
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.status === 200) {
+            this.presentList = data.data
+          } else {
+            this.$message.error(this.$t(data.message))
+          }
+        })
+      },
+      loadUnlockList () {
+        this.$http({
+          url: this.$http.adornUrl('/education/course/unlock/select'),
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.status === 200) {
+            this.unlockList = data.data
+          } else {
+            this.$message.error(this.$t(data.message))
+          }
+        })
+      },
     },
     created() {
-      let query = this.$route.query
-      this.id = query.id
-    }
+      this.init();
+
+      // 要保证取到
+      this.upload_headers.Authorization = 'Bearer ' + localStorage.getItem('token');
+    },
+    mounted () {
+      this.loadCoursewareList();
+      this.loadPresentList();
+      this.loadUnlockList();
+      this.initContentVditor();
+      this.initPlanVditor();
+    },
   };
 </script>
+<style lang="scss" scoped>
+  .mavon {
+    width: 95% !important;
+  }
+</style>

@@ -11,7 +11,7 @@
         </div>
         <div class="admin_main_block_right">
           <div>
-            <el-button v-if="isAuth('module:advertising:position:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle()">
+            <el-button v-if="isAuth('module:education:courseware:level:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle()">
               {{ $t('common.batch_delete') }}
             </el-button>
           </div>
@@ -60,8 +60,8 @@
                 </span>
               </el-button>
 
-              <el-button v-if="isAuth('module:education:courseware:list')" type="info" icon="el-icon-search" @click="$router.push({name: 'module_education_courseware_list', query: {level_id: scope.row.id}})">
-                {{ $t('courseware.view') }}
+              <el-button v-if="isAuth('module:education:courseware:level:unit:list')" icon="el-icon-price-tag" @click="$router.push({name: 'module_education_courseware_level_unit_list', query: {courseware_id: dataForm.courseware_id, level_id: scope.row.id}})">
+                {{ $t('courseware.level.unit_info') }}
               </el-button>
 
               <el-button v-if="isAuth('module:education:courseware:level:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">

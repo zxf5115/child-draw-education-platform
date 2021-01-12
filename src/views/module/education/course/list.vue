@@ -8,6 +8,16 @@
               {{ $t('common.create') }}
             </el-button>
           </div>
+          <div>
+            <el-button v-if="isAuth('module:education:course:present:list')" icon="el-icon-price-tag" @click="$router.push({name: 'module_education_course_present_list'})">
+              {{ $t('course.present_info') }}
+            </el-button>
+          </div>
+          <div>
+            <el-button v-if="isAuth('module:education:course:unlock:list')" icon="el-icon-price-tag" @click="$router.push({name: 'module_education_course_unlock_list'})">
+              {{ $t('course.unlock_info') }}
+            </el-button>
+          </div>
         </div>
         <div class="admin_main_block_right">
           <div>
@@ -25,21 +35,13 @@
             </el-input>
           </div>
           <div>
-            <el-select v-model="dataForm.is_recommend" :placeholder="$t('common.please_select') + $t('course.is_recommend')" clearable>
+            <el-select v-model="dataForm.courseware_id" :placeholder="$t('common.please_select') + $t('courseware.title')" clearable>
               <el-option :label="$t('common.all')" value=""></el-option>
-              <el-option :label="$t('course.enable')" value="1"></el-option>
-              <el-option :label="$t('course.disable')" value="2"></el-option>
+              <el-option v-for="(v,k) in coursewareList" :label="v.title" :key="k" :value="v.id"></el-option>
             </el-select>
           </div>
           <div>
-            <el-select v-model="dataForm.is_hidden" :placeholder="$t('common.please_select') + $t('course.is_hidden')" clearable>
-              <el-option :label="$t('common.all')" value=""></el-option>
-              <el-option :label="$t('common.hidden')" value="1"></el-option>
-              <el-option :label="$t('common.show')" value="2"></el-option>
-            </el-select>
-          </div>
-          <div>
-            <el-date-picker format="yyyy-MM-dd HH:mm" v-model="dataForm.create_time" type="daterange" :range-separator="$t('common.to')" :start-placeholder="$t('common.start_time')" :end-placeholder="$t('common.end_time')" clearable>
+            <el-date-picker format="yyyy-MM-dd" v-model="dataForm.course_start_time" type="daterange" :range-separator="$t('common.to')" :start-placeholder="$t('common.start_time')" :end-placeholder="$t('common.end_time')" clearable>
             </el-date-picker>
           </div>
           <div>
@@ -49,7 +51,7 @@
           </div>
         </div>
       </div>
-      <div class="admin_table_main">
+      <div class="admin_table_main color">
         <el-table :data="dataList" v-loading="dataListLoading" @selection-change="selectionChangeHandle">
           <el-table-column type="selection" header-align="center" align="center">
           </el-table-column>
@@ -57,63 +59,79 @@
           <el-table-column prop="id" :label="$t('common.id')" width="70">
           </el-table-column>
 
-          <el-table-column :label="$t('course.info')" width="400">
+          <el-table-column prop="title" :label="$t('course.title')" width="320">
+          </el-table-column>
+
+          <el-table-column :label="$t('courseware.title')" width="80">
             <template slot-scope="scope">
-              <dl class="table_dl">
-                <dt>
-                  <el-image :src="scope.row.picture" style="width: 54px;height: 48px;">
-                    <div slot="error" class="image-slot">
-                      <i class="el-icon-picture-outline"></i>
-                    </div>
-                  </el-image>
-                </dt>
-                <dd class="table_dl_dd_all_30">
-                  {{ $t('course.title') }}：
-                  {{ scope.row.title }}
-                </dd>
-                <dd class="table_dl_dd_all_16_gray">
-                  {{ $t('course.create_time') }}：
-                  {{ scope.row.create_time }}
-                </dd>
-              </dl>
+              <span v-if="scope.row.courseware">
+                {{ scope.row.courseware.title }}
+              </span>
             </template>
           </el-table-column>
 
-          <el-table-column prop="is_recommend" :label="$t('course.is_recommend')">
+          <el-table-column prop="semester" :label="$t('course.semester')"  width="80">
             <template slot-scope="scope">
-              {{ scope.row.is_recommend.text }}
+              {{ scope.row.semester.text }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="is_hidden" :label="$t('course.is_hidden')">
+          <el-table-column :label="$t('course.apply_time')" width="160">
             <template slot-scope="scope">
-              {{ scope.row.is_hidden.text }}
+              {{ scope.row.apply_start_time }} - {{ scope.row.apply_end_time }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="sort" :label="$t('common.sort')">
+          <el-table-column prop="course_start_time" :label="$t('course.course_start_time')" width="100">
           </el-table-column>
 
-          <el-table-column :label="$t('course.status')">
+          <el-table-column prop="real_price" :label="$t('course.real_price')" width="80">
+          </el-table-column>
+
+          <el-table-column :label="$t('course.recruitment')" width="100">
             <template slot-scope="scope">
-              <el-tag effect="dark" :type=" scope.row.status.value == 1 ? 'success' : 'danger' ">
-                {{ scope.row.status.text }}
+              <span v-if="scope.row.unlock">
+                {{ scope.row.unlock.title }}
+              </span>
+            </template>
+          </el-table-column>
+
+          <el-table-column :label="$t('course.management_number')" width="100">
+            <template slot-scope="scope">
+              <span v-if="scope.row.unlock">
+                {{ scope.row.unlock.title }}
+              </span>
+            </template>
+          </el-table-column>
+
+          <el-table-column :label="$t('course.unlock.title')" width="80">
+            <template slot-scope="scope">
+              <span class="blue" v-if="scope.row.unlock">
+                {{ scope.row.unlock.title }}
+              </span>
+            </template>
+          </el-table-column>
+
+          <el-table-column :label="$t('course.apply_number')" width="100">
+            <template slot-scope="scope">
+              <span class="blue" v-if="scope.row.unlock">
+                {{ scope.row.unlock.title }}
+              </span>
+            </template>
+          </el-table-column>
+
+          <el-table-column :label="$t('common.status')" width="80">
+            <template slot-scope="scope">
+              <el-tag effect="dark" :type=" scope.row.apply_status.value == 1 ? 'success' : 'danger' ">
+                {{ scope.row.apply_status.text }}
               </el-tag>
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('common.handle')" fixed="right" width="320px">
+          <el-table-column :label="$t('common.handle')" fixed="right" width="200px">
             <template slot-scope="scope">
               <el-button v-if="isAuth('module:education:course:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_education_course_form', query: {id: scope.row.id}})">
                 {{ $t('common.update') }}
-              </el-button>
-
-              <el-button v-if="isAuth('module:education:course:unit:list')" icon="el-icon-copy-document" @click="$router.push({name: 'module_education_course_unit_list', query: {course_id: scope.row.id}})">
-                {{ $t('course.course_unit') }}
-              </el-button>
-
-              <el-button v-if="isAuth('module:education:course:point:list')" icon="el-icon-copy-document" @click="$router.push({name: 'module_education_course_point_list', query: {course_id: scope.row.id}})">
-                {{ $t('course.course_point') }}
               </el-button>
 
               <el-button v-if="isAuth('module:education:course:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
@@ -145,16 +163,33 @@
     data() {
       return {
         model: 'education/course',
+        coursewareList: [],
         dataForm: [
           'title',
-          'is_recommend',
-          'is_hidden',
-          'create_time',
+          'courseware_id',
+          'course_start_time'
         ],
       };
     },
     created() {
       this.getDataList()
-    }
+    },
+    methods: {
+      loadCoursewareList () {
+        this.$http({
+          url: this.$http.adornUrl('/education/courseware/select'),
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.status === 200) {
+            this.coursewareList = data.data
+          } else {
+            this.$message.error(this.$t(data.message))
+          }
+        })
+      }
+    },
+    mounted () {
+      this.loadCoursewareList();
+    },
   };
 </script>

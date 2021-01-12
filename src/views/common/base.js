@@ -58,10 +58,14 @@ export default {
           'category': this.dataForm.category,
           'pid': this.dataForm.pid,
           'role_id': this.dataForm.role_id,
-          'unit_id': this.dataForm.unit_id,
+
           'parent_id': this.dataForm.parent_id,
           'category_id': this.dataForm.category_id,
+
           'courseware_id': this.dataForm.courseware_id,
+          'level_id': this.dataForm.level_id,
+          'unit_id': this.dataForm.unit_id,
+
           'order_status': this.dataForm.order_status,
           'add_time': this.dataForm.add_time,
           'valid_time': this.dataForm.valid_time,
@@ -80,6 +84,12 @@ export default {
           'organization_title': this.dataForm.organization_title,
           'archive_weixin': this.dataForm.archive_weixin,
           'teacher_name': this.dataForm.teacher_name,
+
+          'courseware_title': this.dataForm.courseware_title,
+          'member_nickname': this.dataForm.member_nickname,
+          'archive_age': this.dataForm.archive_age,
+          'course_title': this.dataForm.course_title,
+          'course_start_time': this.dataForm.course_start_time,
         })
       }).then(({data}) => {
         if (data && data.status === 200)
@@ -138,7 +148,45 @@ export default {
           }
         })
       }).catch(() => {})
-    }
+    },
+    // 上传头像
+    handleAvatarSuccess(res, file) {
+      this.dataForm.avatar = res.data;
+    },
+    beforeAvatarUpload(file) {
+      const isPicture = (file.type === 'image/jpeg' || file.type === 'image/png');
+      const isLt8M = file.size / 1024 / 1024 < 8;
+
+      if (!isPicture) {
+        var message = this.$t('common.rules.picture.picture_type');
+        this.$message.error(this.$t(data.message))
+      }
+      if (!isLt8M) {
+        var message = this.$t('common.rules.picture.picture_size');
+        this.$message.error(this.$t(data.message))
+      }
+
+      return isPicture && isLt8M;
+    },
+    // 上传图片
+    handlePictureSuccess(res, file) {
+      this.dataForm.picture = res.data;
+    },
+    beforePictureUpload(file) {
+      const isPicture = (file.type === 'image/jpeg' || file.type === 'image/png');
+      const isLt8M = file.size / 1024 / 1024 < 8;
+
+      if (!isPicture) {
+        var message = this.$t('common.rules.picture.picture_type');
+        this.$message.error(this.$t(data.message))
+      }
+      if (!isLt8M) {
+        var message = this.$t('common.rules.picture.picture_size');
+        this.$message.error(this.$t(data.message))
+      }
+
+      return isPicture && isLt8M;
+    },
   },
   filters: {
     formatMoney: function(value) {

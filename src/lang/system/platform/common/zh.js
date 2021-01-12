@@ -123,7 +123,7 @@ export const common =  {
     rules: {
       require: '图片不能为空',
       picture_type: '图片只能是 JPG 或 PNG 格式',
-      picture_size: '图片大小不能超过 10MB',
+      picture_size: '图片大小不能超过 8MB',
     },
   },
 
