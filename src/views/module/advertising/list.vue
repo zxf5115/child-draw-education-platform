@@ -34,7 +34,7 @@
 
           <el-table-column prop="picture" :label="$t('advertising.picture')">
             <template slot-scope="scope">
-              <el-image width="30" :src="scope.row.picture">
+              <el-image style="width: 100px;" :src="scope.row.picture">
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline"></i>
                 </div>
