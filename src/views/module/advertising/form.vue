@@ -152,7 +152,7 @@
 
       loadPositionList () {
         this.$http({
-          url: this.$http.adornUrl('/advertising/position'),
+          url: this.$http.adornUrl('/advertising/position/select'),
           method: 'get'
         }).then(({data}) => {
           if (data && data.status === 200) {
