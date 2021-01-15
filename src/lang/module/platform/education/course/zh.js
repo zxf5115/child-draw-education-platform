@@ -6,6 +6,7 @@ export const course = {
 
   present_info: '课程礼包',
   unlock_info: '课程解锁',
+  teacher_info: '招生老师',
 
   title: '课程名字',
   picture: '课程封面',
@@ -21,6 +22,7 @@ export const course = {
   class_size: '管理人数',
   content: '课程详情',
   plan: '课程安排',
+  level: '课程级别',
 
   rules: {
     courseware_id:{
@@ -79,6 +81,23 @@ export const course = {
       },
       duration: {
         require: '时长不能为空',
+      }
+    }
+  },
+
+  teacher: {
+    list: '老师列表',
+    from: '老师操作',
+    view: '老师详情',
+
+    sort: '老师排序',
+
+    rules: {
+      level_id: {
+        require: '课件级别不能为空',
+      },
+      teacher_id: {
+        require: '招聘老师不能为空',
       }
     }
   }

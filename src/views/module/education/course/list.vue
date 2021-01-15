@@ -128,10 +128,14 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('common.handle')" fixed="right" width="200px">
+          <el-table-column :label="$t('common.handle')" fixed="right" width="320px">
             <template slot-scope="scope">
               <el-button v-if="isAuth('module:education:course:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_education_course_form', query: {id: scope.row.id}})">
                 {{ $t('common.update') }}
+              </el-button>
+
+              <el-button v-if="isAuth('module:education:course:teacher:list')" icon="el-icon-price-tag" @click="$router.push({name: 'module_education_course_teacher_list', query: {course_id: scope.row.id, courseware_id: scope.row.courseware_id}})">
+                {{ $t('course.teacher_info') }}
               </el-button>
 
               <el-button v-if="isAuth('module:education:course:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
