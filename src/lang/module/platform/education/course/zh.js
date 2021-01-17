@@ -56,7 +56,7 @@ export const course = {
     from: '礼包操作',
     view: '礼包详情',
 
-    title: '礼包名称',
+    title: '礼包信息',
     description: '礼包介绍',
 
     rules: {

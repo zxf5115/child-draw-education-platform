@@ -9,11 +9,6 @@
             </el-button>
           </div>
           <div>
-            <el-button v-if="isAuth('module:education:course:present:list')" icon="el-icon-price-tag" @click="$router.push({name: 'module_education_course_present_list'})">
-              {{ $t('course.present_info') }}
-            </el-button>
-          </div>
-          <div>
             <el-button v-if="isAuth('module:education:course:unlock:list')" icon="el-icon-price-tag" @click="$router.push({name: 'module_education_course_unlock_list'})">
               {{ $t('course.unlock_info') }}
             </el-button>
@@ -85,7 +80,7 @@
           <el-table-column prop="course_start_time" :label="$t('course.course_start_time')" width="100">
           </el-table-column>
 
-          <el-table-column prop="real_price" :label="$t('course.real_price')" width="80">
+          <el-table-column prop="real_price" :label="$t('course.real_price')" width="100">
           </el-table-column>
 
           <el-table-column :label="$t('course.recruitment')" width="100">

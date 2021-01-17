@@ -111,4 +111,18 @@ export const member = {
     'answer_result': '老师批复',
     'answer_remark': '老师建议',
   },
+
+
+  address: {
+    list: '收货地址列表',
+    from: '收货地址操作',
+    view: '收货地址详情',
+
+    name: '收货人姓名',
+    mobile: '联系电话',
+    province: '省',
+    city: '市',
+    county: '县',
+    address: '收货地址',
+  }
 }

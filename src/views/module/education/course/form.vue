@@ -33,11 +33,8 @@
             <el-input-number v-model="dataForm.semester" :min="1"></el-input-number>
           </el-form-item>
 
-          <el-form-item :label="$t('course.present.title')" prop="present_id">
-            <el-select v-model="dataForm.present_id" :placeholder="$t('common.please_select')+$t('course.present.title')">
-              <el-option v-for="(v,k) in presentList" :label="v.title" :key="k" :value="v.id">
-              </el-option>
-            </el-select>
+          <el-form-item :label="$t('course.present.title')" prop="present">
+            <el-input v-model="dataForm.present" type="textarea" :placeholder="$t('common.please_input')+$t('course.present.title')"></el-input>
           </el-form-item>
 
           <el-form-item :label="$t('course.description')" prop="description">
@@ -111,7 +108,6 @@
         model: 'education/course',
         upload_headers:{},
         coursewareList: [],
-        presentList: [],
         unlockList: [],
         contentEditor: '',
         planEditor: '',
@@ -119,10 +115,10 @@
         {
           id: 0,
           courseware_id : '',
-          present_id : '',
           unlock_id : '',
           title: '',
           semester : 1,
+          present : '',
           description: '',
           apply_time: '',
           course_start_time: '',
@@ -176,10 +172,10 @@
             }).then(({data}) => {
               if (data && data.status === 200) {
                 this.dataForm.courseware_id     = data.data.courseware_id
-                this.dataForm.present_id        = data.data.present_id
                 this.dataForm.unlock_id         = data.data.unlock_id
                 this.dataForm.title             = data.data.title
                 this.dataForm.semester          = data.data.semester.value
+                this.dataForm.present           = data.data.present
                 this.dataForm.description       = data.data.description
                 this.dataForm.apply_time        = data.data.apply_time
                 this.dataForm.course_start_time = data.data.course_start_time
@@ -207,10 +203,10 @@
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
                 'courseware_id': this.dataForm.courseware_id,
-                'present_id': this.dataForm.present_id,
                 'unlock_id': this.dataForm.unlock_id,
                 'title': this.dataForm.title,
                 'semester': this.dataForm.semester,
+                'present': this.dataForm.present,
                 'description': this.dataForm.description,
                 'apply_time': this.dataForm.apply_time,
                 'course_start_time': this.dataForm.course_start_time,
@@ -295,18 +291,6 @@
           }
         })
       },
-      loadPresentList () {
-        this.$http({
-          url: this.$http.adornUrl('/education/course/present/select'),
-          method: 'get'
-        }).then(({data}) => {
-          if (data && data.status === 200) {
-            this.presentList = data.data
-          } else {
-            this.$message.error(this.$t(data.message))
-          }
-        })
-      },
       loadUnlockList () {
         this.$http({
           url: this.$http.adornUrl('/education/course/unlock/select'),
@@ -328,7 +312,6 @@
     },
     mounted () {
       this.loadCoursewareList();
-      this.loadPresentList();
       this.loadUnlockList();
       this.initContentVditor();
       this.initPlanVditor();

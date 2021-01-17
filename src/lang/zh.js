@@ -25,9 +25,8 @@ import  {template}  from './module/platform/template/zh'
 import  {advertising}  from './module/platform/advertising/zh'
 import  {course}  from './module/platform/education/course/zh'
 import  {courseware}  from './module/platform/education/courseware/zh'
-import  {keyword}  from './module/platform/keyword/zh'
 
-
+import  {order}  from './module/platform/order/zh'
 
 export default {
 
@@ -118,7 +117,7 @@ export default {
     ...squad
   },
 
-  keyword: {
-    ...keyword
+  order: {
+    ...order
   },
 }
