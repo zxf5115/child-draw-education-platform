@@ -95,7 +95,7 @@
       };
     },
     created() {
-      this.dataForm.category_id = this.$route.params.category_id;
+      this.dataForm.category_id = this.$route.query.category_id;
       this.getDataList()
     }
   };

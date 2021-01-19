@@ -118,7 +118,7 @@
                 {{ $t('common.view') }}
               </el-button>
 
-              <el-button v-if="isAuth('module:order:course:send')" type="primary" icon="el-icon-s-promotion" @click="$router.push({name: 'module_order_course_send', query: {id: scope.row.id}})">
+              <el-button v-if="isAuth('module:order:course:send')" type="primary" icon="el-icon-s-promotion" @click="$router.push({name: 'module_order_course_send', query: {order_id: scope.row.id, member_id: scope.row.member_id}})">
                 {{ $t('order.course.send') }}
               </el-button>
             </template>

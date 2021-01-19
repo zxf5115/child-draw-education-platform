@@ -29,6 +29,22 @@
             </el-upload>
           </el-form-item>
 
+          <el-form-item :label="$t('template.left_top')" prop="left_top">
+            <el-input :placeholder="$t('template.input')" v-model="dataForm.left_top"></el-input>
+          </el-form-item>
+
+          <el-form-item :label="$t('template.left_bottom')" prop="left_bottom">
+            <el-input :placeholder="$t('template.input')" v-model="dataForm.left_bottom"></el-input>
+          </el-form-item>
+
+          <el-form-item :label="$t('template.right_top')" prop="right_top">
+            <el-input :placeholder="$t('template.input')" v-model="dataForm.right_top"></el-input>
+          </el-form-item>
+
+          <el-form-item :label="$t('template.right_bottom')" prop="right_bottom">
+            <el-input :placeholder="$t('template.input')" v-model="dataForm.right_bottom"></el-input>
+          </el-form-item>
+
           <el-form-item :label="$t('common.sort')" prop="sort">
             <el-input-number :placeholder="$t('common.please_input')+$t('common.sort')" v-model="dataForm.sort"></el-input-number>
           </el-form-item>
@@ -60,6 +76,10 @@
           id: 0,
           title: '',
           picture: '',
+          left_top: '',
+          left_bottom: '',
+          right_top: '',
+          right_bottom: '',
           sort: 0,
         },
         dataRule:
@@ -69,7 +89,19 @@
           ],
           picture: [
             { required: true, message: this.$t('template.rules.title.require'), trigger: 'blur' },
-          ]
+          ],
+          left_top: [
+            { required: true, message: this.$t('template.rules.left_top.require'), trigger: 'blur' },
+          ],
+          left_bottom: [
+            { required: true, message: this.$t('template.rules.left_bottom.require'), trigger: 'blur' },
+          ],
+          right_top: [
+            { required: true, message: this.$t('template.rules.right_top.require'), trigger: 'blur' },
+          ],
+          right_bottom: [
+            { required: true, message: this.$t('template.rules.right_bottom.require'), trigger: 'blur' },
+          ],
         }
       };
     },
@@ -89,9 +121,13 @@
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.title   = data.data.title
-                this.dataForm.picture = data.data.picture
-                this.dataForm.sort    = data.data.sort
+                this.dataForm.title        = data.data.title
+                this.dataForm.picture      = data.data.picture
+                this.dataForm.left_top     = data.data.left_top
+                this.dataForm.left_bottom  = data.data.left_bottom
+                this.dataForm.right_top    = data.data.right_top
+                this.dataForm.right_bottom = data.data.right_bottom
+                this.dataForm.sort         = data.data.sort
               }
             })
           }
@@ -108,6 +144,10 @@
                 'id': this.dataForm.id || undefined,
                 'title': this.dataForm.title,
                 'picture': this.dataForm.picture,
+                'left_top': this.dataForm.left_top,
+                'left_bottom': this.dataForm.left_bottom,
+                'right_top': this.dataForm.right_top,
+                'right_bottom': this.dataForm.right_bottom,
                 'sort': this.dataForm.sort,
               })
             }).then(({data}) => {

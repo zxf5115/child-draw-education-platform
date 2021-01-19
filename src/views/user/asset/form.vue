@@ -99,8 +99,8 @@ export default {
     created() {
 
         // 判断是否是编辑
-        if(!this.$isEmpty(this.$route.params.id)){
-            this.edit_id = this.$route.params.id;
+        if(!this.$isEmpty(this.$route.query.id)){
+            this.edit_id = this.$route.query.id;
         }else{
             this.get_add_roles_info();
         }

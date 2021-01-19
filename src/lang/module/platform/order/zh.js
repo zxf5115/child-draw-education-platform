@@ -18,6 +18,32 @@ export const order = {
     create_time: '支付时间',
     money_total: '课程收入(元):',
     description: '礼包发货后，获取运单状态',
+
+    logistics: {
+      info: '物流信息',
+
+      present_name: '礼包名称',
+      semester: '礼包周期',
+      company_name: '快递公司',
+      logistics_no: '运单号',
+      logistics_status: '运单状态',
+      create_time: '发货时间',
+
+      rules: {
+        present_name: {
+          require: '礼包名称不能为空',
+        },
+        semester: {
+          require: '礼包周期不能为空',
+        },
+        company_name: {
+          require: '快递公司不能为空',
+        },
+        logistics_no: {
+          require: '运单号不能为空',
+        },
+      },
+    }
   },
 
 

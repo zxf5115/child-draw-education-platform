@@ -142,9 +142,6 @@
                     <m-audio :src="scope.row.content"></m-audio>
                   </span>
                 </template>
-
-
-
               </el-table-column>
             </el-table>
             <div class="admin_table_main_pagination">

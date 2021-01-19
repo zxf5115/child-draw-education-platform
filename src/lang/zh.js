@@ -28,6 +28,8 @@ import  {courseware}  from './module/platform/education/courseware/zh'
 
 import  {order}  from './module/platform/order/zh'
 
+import  {goods}  from './module/platform/goods/zh'
+
 export default {
 
   // 公共
@@ -117,7 +119,13 @@ export default {
     ...squad
   },
 
+  // 订单
   order: {
     ...order
+  },
+
+  // 商品
+  goods: {
+    ...goods
   },
 }

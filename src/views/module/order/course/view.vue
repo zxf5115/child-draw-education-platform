@@ -85,7 +85,7 @@
                 </el-col>
                 <el-col :span="8">
                   <el-form-item :label="$t('order.course.pay_type')" label-width="80">
-                      {{ dataForm.pay_type.text }}
+                    {{ dataForm.pay_type.text }}
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
@@ -97,8 +97,8 @@
               <el-row>
                 <el-col :span="8">
                   <el-form-item :label="$t('course.present.title')" label-width="80">
-                    <span class="orange" v-if="dataForm.course.present">
-                      {{ dataForm.course.present.title }}
+                    <span class="orange" v-if="dataForm.course">
+                      {{ dataForm.course.present }}
                     </span>
                   </el-form-item>
                 </el-col>
@@ -138,38 +138,59 @@
         </el-card>
 
         <el-card class="box-card mt10" shadow="never">
-          <div slot="header" class="clearfix">
-            <span>{{ $t('order.course.course_present_info') }}</span>
+          <div slot="header" class="clearfix color">
+            <el-row>
+              <el-col :span="12">
+                <span>{{ $t('order.course.course_present_info') }}</span>
+              </el-col>
+              <el-col class="right" :span="12">
+                <el-button v-if="isAuth('module:order:course:send')" type="primary" icon="el-icon-s-promotion" @click="$router.push({name: 'module_order_course_send', query: {order_id: dataForm.id, member_id: dataForm.member_id}})">
+                  {{ $t('order.course.send') }}
+                </el-button>
+              </el-col>
+            </el-row>
           </div>
           <div class="text item">
             <el-table :data="dataList" v-loading="dataListLoading">
-              <el-table-column :label="$t('member.avatar')" width="120">
+              <el-table-column prop="logistics_no" :label="$t('order.course.logistics.logistics_no')">
+              </el-table-column>
+
+              <el-table-column prop="company_name" :label="$t('order.course.logistics.company_name')">
+              </el-table-column>
+
+              <el-table-column prop="present_name" :label="$t('order.course.logistics.present_name')">
+              </el-table-column>
+
+              <el-table-column prop="semester" :label="$t('order.course.logistics.semester')">
+              </el-table-column>
+
+              <el-table-column :label="$t('order.course.logistics.logistics_status')">
                 <template slot-scope="scope">
-                  <el-avatar :size="45" v-if="scope.row.member" :src="scope.row.member.avatar">
-                    <img src="@/assets/images/default/circle.png"/>
-                  </el-avatar>
+                  {{ scope.row.logistics_status.text }}
                 </template>
               </el-table-column>
 
-              <el-table-column prop="title" :label="$t('member.nickname')" width="200">
-                <template slot-scope="scope">
-                  <span v-if="scope.row.member">
-                    {{ scope.row.member.nickname }}
-                  </span>
-                </template>
+              <el-table-column prop="create_time" :label="$t('order.course.logistics.create_time')" width="200">
               </el-table-column>
 
-              <el-table-column prop="content" :label="$t('production.comment.content')">
+              <el-table-column :label="$t('common.handle')" fixed="right" width="100">
                 <template slot-scope="scope">
-                  <span v-if="scope.row.suffix.value == 1">
-                    {{ scope.row.content }}
-                  </span>
-                  <span v-else>
-                    <m-audio :src="scope.row.content"></m-audio>
-                  </span>
+                  <el-button v-if="isAuth('module:order:course:send')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_order_course_send', query: {id: scope.row.id, member_id: scope.row.member_id, order: scope.row.order_id}})">
+                    {{ $t('common.update') }}
+                  </el-button>
                 </template>
               </el-table-column>
             </el-table>
+            <div class="admin_table_main_pagination">
+              <el-pagination
+                @size-change="sizeChangeHandle"
+                @current-change="currentChangeHandle"
+                :page-size="pageSize"
+                :total="totalPage"
+                :current-page="pageIndex"
+                background layout="prev, pager, next,jumper,total">
+              </el-pagination>
+            </div>
           </div>
         </el-card>
       </div>
@@ -188,7 +209,9 @@
         model: 'order/course',
         dataForm:
         {
-          id: 0
+          id: 0,
+          pay_type: '',
+          order_status: '',
         }
       };
     },
@@ -218,7 +241,7 @@
       getDataList () {
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/production/comment/list'),
+          url: this.$http.adornUrl('/order/course/logistics/list'),
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,
