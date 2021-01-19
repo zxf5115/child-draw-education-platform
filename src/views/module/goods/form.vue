@@ -23,7 +23,7 @@
           </el-form-item>
 
           <el-form-item :label="$t('goods.cover')" prop="cover">
-            <el-upload class="avatar-uploader" :action="this.$http.adornUrl('/file/picture')" :show-file-list="false" :headers="upload_headers" :on-success="handlePictureSuccess" :before-upload="beforePictureUpload">
+            <el-upload class="avatar-uploader" :action="this.$http.adornUrl('/file/picture')" :show-file-list="false" :headers="upload_headers" :on-success="handleCoverSuccess" :before-upload="beforePictureUpload">
               <img v-if="dataForm.cover" :src="dataForm.cover" class="avatar-upload">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
@@ -101,6 +101,7 @@
           id: 0,
           title: '',
           cover : '',
+          picture : [],
           description : '',
           lollipop_total: 0,
           cash_money: 0.00,
@@ -150,7 +151,7 @@
                 this.dataForm.cash_money     = data.data.cash_money
                 this.dataForm.exchange_total = data.data.exchange_total
                 this.dataForm.picture        = data.data.picture
-                this.dataForm.status         = data.data.status + ''
+                this.dataForm.status         = data.data.status.value + ''
 
                 if(data.data.detail)
                 {
