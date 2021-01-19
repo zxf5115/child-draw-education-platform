@@ -49,7 +49,7 @@
           </el-form-item>
 
           <el-form-item class="mavon" :label="$t('goods.picture')" prop="picture">
-            <el-upload :action="this.$http.adornUrl('/file/picture')" list-type="picture-card" :headers="upload_headers" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
+            <el-upload multiple :action="this.$http.adornUrl('/file/picture')" list-type="picture-card" :headers="upload_headers" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
               <i class="el-icon-plus"></i>
             </el-upload>
             <el-dialog :visible.sync="dialogVisible">
@@ -101,7 +101,6 @@
           id: 0,
           title: '',
           cover : '',
-          picture : [],
           description : '',
           lollipop_total: 0,
           cash_money: 0.00,
