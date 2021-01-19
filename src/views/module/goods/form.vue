@@ -49,7 +49,7 @@
           </el-form-item>
 
           <el-form-item class="mavon" :label="$t('goods.picture')" prop="picture">
-            <el-upload multiple :action="this.$http.adornUrl('/file/picture')" list-type="picture-card" :headers="upload_headers" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
+            <el-upload :action="this.$http.adornUrl('/file/picture')" list-type="picture-card" :headers="upload_headers" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"  :on-success="handlePictureSuccess" :before-upload="beforePictureUpload" :file-list="pictureList">
               <i class="el-icon-plus"></i>
             </el-upload>
             <el-dialog :visible.sync="dialogVisible">
@@ -95,12 +95,14 @@
         upload_headers:{},
         dialogImageUrl: '',
         dialogVisible: false,
+        pictureList: [],
         contentEditor: '',
         dataForm:
         {
           id: 0,
           title: '',
           cover : '',
+          picture: '',
           description : '',
           lollipop_total: 0,
           cash_money: 0.00,
@@ -225,7 +227,10 @@
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
-      }
+      },
+      handlePictureSuccess(res, file) {
+        this.dataForm.picture.push(res.data);
+      },
     },
     created() {
       this.init();
