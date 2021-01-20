@@ -102,7 +102,7 @@
           id: 0,
           title: '',
           cover : '',
-          picture: '',
+          picture: [],
           description : '',
           lollipop_total: 0,
           cash_money: 0.00,
@@ -147,12 +147,14 @@
               if (data && data.status === 200) {
                 this.dataForm.title          = data.data.title
                 this.dataForm.cover          = data.data.cover
+                this.dataForm.picture        = data.data.pictureData
                 this.dataForm.description    = data.data.description
                 this.dataForm.lollipop_total = data.data.lollipop_total
                 this.dataForm.cash_money     = data.data.cash_money
                 this.dataForm.exchange_total = data.data.exchange_total
-                this.dataForm.picture        = data.data.picture
                 this.dataForm.status         = data.data.status.value + ''
+
+                this.pictureList = data.data.pictureList
 
                 if(data.data.detail)
                 {
@@ -222,7 +224,14 @@
         })
       },
       handleRemove(file, fileList) {
-        console.log(file, fileList);
+        let url = file.url || ''
+
+        var index = this.dataForm.picture.findIndex(item =>{
+　　　　　　if(item==url){
+　　　　　　　return true
+　　　　　　}
+　　　　　})
+　　　　　this.dataForm.picture.splice(index,1)
       },
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
