@@ -8,7 +8,7 @@
 
         <div class="admin_main_block_right">
           <div class="mr10">
-            <el-button icon="el-icon-back" @click="$router.push({name: 'module_production_list'})">
+            <el-button icon="el-icon-back" @click="$router.push({name: 'module_order_course_list'})">
               {{ $t('common.return') }}
             </el-button>
           </div>
@@ -61,13 +61,11 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-col :span="8">
                   <el-form-item :label="$t('order.course.username')" label-width="80">
                     <span v-if="dataForm.member">
                       {{ dataForm.member.username }}
                     </span>
                   </el-form-item>
-                </el-col>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item :label="$t('order.course.create_time')" label-width="80">
@@ -246,6 +244,7 @@
           params: this.$http.adornParams({
             'page': this.pageIndex,
             'limit': this.pageSize,
+            'order_id': this.dataForm.id,
           })
         }).then(({data}) => {
           if (data && data.status === 200)

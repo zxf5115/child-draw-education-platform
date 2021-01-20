@@ -3,148 +3,143 @@
     <div class="admin_main_block">
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
-          <div>{{ $t('production.view') }}</div>
+          <div>{{ $t('order.goods.view') }}</div>
         </div>
 
         <div class="admin_main_block_right">
           <div class="mr10">
-            <el-button icon="el-icon-back" @click="$router.push({name: 'module_production_list'})">
+            <el-button icon="el-icon-back" @click="$router.push({name: 'module_order_goods_list'})">
               {{ $t('common.return') }}
             </el-button>
           </div>
         </div>
       </div>
 
-      <div class="admin_form_main">
+      <div class="admin_form_main color">
         <el-card class="box-card" shadow="never">
           <div slot="header" class="clearfix">
-            <span>{{ $t('common.basic_info') }}</span>
+            <span>{{ $t('order.goods.basic_info') }}</span>
           </div>
           <div class="text item">
             <el-form ref="form" :model="dataForm" label-width="80">
               <el-row>
+                <el-col :span="24">
+                  <el-form-item :label="$t('order.goods.order_no')" label-width="120">
+                    {{ dataForm.order_no }}
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
                 <el-col :span="8">
-                  <el-form-item :label="$t('member.nickname')" label-width="80">
+                  <el-form-item :label="$t('goods.title')" label-width="100">
+                    <span v-if="dataForm.goods">
+                      {{ dataForm.goods.title }}
+                    </span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item :label="$t('order.goods.nickname')" label-width="80">
                     <span v-if="dataForm.member">
                       {{ dataForm.member.nickname }}
                     </span>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item :label="$t('member.archive.age')" label-width="80">
-                    <span v-if="dataForm.archive">
-                      {{ dataForm.archive.age }}
-                    </span>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                  <el-form-item :label="$t('member.archive.city')" label-width="80">
-                    <span v-if="dataForm.archive">
-                      {{ dataForm.archive.city_id.text }}
-                    </span>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="8">
-                  <el-form-item :label="$t('member.username')" label-width="80">
+                  <el-form-item :label="$t('order.goods.username')" label-width="80">
                     <span v-if="dataForm.member">
                       {{ dataForm.member.username }}
                     </span>
                   </el-form-item>
                 </el-col>
-                <el-col :span="8">
-                  <el-form-item :label="$t('courseware.title')" label-width="80">
-                    <span v-if="dataForm.courseware">
-                      {{ dataForm.courseware.title }}
-                    </span>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                  <el-form-item :label="$t('course.semester')" label-width="80">
-                    <span v-if="dataForm.course">
-                      {{ dataForm.course.semester.text }}
-                    </span>
-                  </el-form-item>
-                </el-col>
               </el-row>
               <el-row>
                 <el-col :span="8">
-                  <el-form-item :label="$t('courseware.level.level')" label-width="80">
-                    <span v-if="dataForm.level">
-                      {{ dataForm.level.level }}
-                    </span>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="16">
-                  <el-form-item :label="$t('course.title')" label-width="100">
-                    <span v-if="dataForm.course">
-                      {{ dataForm.course.title }}
-                    </span>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="8">
-                  <el-form-item :label="$t('production.create_time')" label-width="80">
+                  <el-form-item :label="$t('order.goods.create_time')" label-width="80">
                     {{ dataForm.create_time }}
                   </el-form-item>
                 </el-col>
-                <el-col :span="16">
-                  <el-form-item :label="$t('production.approval_total')" label-width="100">
-                    {{ dataForm.approval_total }}
+                <el-col :span="8">
+                  <el-form-item :label="$t('order.goods.lollipop_total')" label-width="80">
+                    <span class="red">
+                      {{ dataForm.lollipop_total }}
+                    </span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item :label="$t('order.goods.pay_money')" label-width="80">
+                    <span class="red">
+                      {{ dataForm.pay_money }}
+                    </span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item :label="$t('order.goods.exchange_type')" label-width="80">
+                    {{ dataForm.exchange_type.text }}
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item :label="$t('order.goods.pay_type')" label-width="80">
+                    {{ dataForm.pay_type.text }}
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item :label="$t('order.goods.order_status')" label-width="80">
+                    {{ dataForm.order_status.text }}
                   </el-form-item>
                 </el-col>
               </el-row>
             </el-form>
           </div>
         </el-card>
+
         <el-card class="box-card mt10" shadow="never">
           <div slot="header" class="clearfix">
-            <span>{{ $t('production.info') }}</span>
+            <span>{{ $t('order.goods.address_info') }}</span>
           </div>
           <div class="text item">
-            <el-image :src="dataForm.picture" style="width: 100%;">
-              <div slot="error" class="image-slot">
-                <i class="el-icon-picture-outline"></i>
-              </div>
-            </el-image>
+            <el-form ref="form" v-if="dataForm.address" label-width="80">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item :label="$t('member.address.name')" label-width="100">
+                    {{ dataForm.address.name }}
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item :label="$t('member.address.mobile')" label-width="80">
+                    {{ dataForm.address.mobile }}
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item :label="$t('member.address.address')" label-width="80">
+                    {{ dataForm.address.province_id.text }} {{ dataForm.address.city_id.text }} {{ dataForm.address.region_id.text }} {{ dataForm.address.address }}
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
           </div>
         </el-card>
+
         <el-card class="box-card mt10" shadow="never">
-          <div slot="header" class="clearfix">
-            <span>{{ $t('production.comment_info') }}</span>
+          <div slot="header" class="clearfix color">
+            <span>{{ $t('order.goods.logistics_info') }}</span>
           </div>
           <div class="text item">
             <el-table :data="dataList" v-loading="dataListLoading">
-              <el-table-column :label="$t('member.avatar')" width="120">
+              <el-table-column prop="logistics_no" :label="$t('order.goods.logistics.logistics_no')">
+              </el-table-column>
+
+              <el-table-column prop="company_name" :label="$t('order.goods.logistics.company_name')">
+              </el-table-column>
+
+              <el-table-column :label="$t('order.goods.logistics.logistics_status')">
                 <template slot-scope="scope">
-                  <el-avatar :size="45" v-if="scope.row.member" :src="scope.row.member.avatar">
-                    <img src="@/assets/images/default/circle.png"/>
-                  </el-avatar>
+                  {{ scope.row.logistics_status.text }}
                 </template>
               </el-table-column>
 
-              <el-table-column prop="title" :label="$t('member.nickname')" width="200">
-                <template slot-scope="scope">
-                  <span v-if="scope.row.member">
-                    {{ scope.row.member.nickname }}
-                  </span>
-                </template>
-              </el-table-column>
-
-              <el-table-column prop="content" :label="$t('production.comment.content')">
-                <template slot-scope="scope">
-                  <span v-if="scope.row.suffix.value == 1">
-                    {{ scope.row.content }}
-                  </span>
-                  <span v-else>
-                    <m-audio :src="scope.row.content"></m-audio>
-                  </span>
-                </template>
-
-
-
+              <el-table-column prop="create_time" :label="$t('order.goods.logistics.create_time')" width="200">
               </el-table-column>
             </el-table>
             <div class="admin_table_main_pagination">
@@ -172,10 +167,12 @@
     data()
     {
       return {
-        model: 'production',
+        model: 'order/goods',
         dataForm:
         {
-          id: 0
+          id: 0,
+          pay_type: '',
+          order_status: '',
         }
       };
     },
@@ -190,7 +187,7 @@
         this.$nextTick(() => {
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/production/view/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/order/goods/view/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
@@ -205,11 +202,12 @@
       getDataList () {
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/production/comment/list'),
+          url: this.$http.adornUrl('/order/goods/logistics/list'),
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,
             'limit': this.pageSize,
+            'order_id': this.dataForm.id,
           })
         }).then(({data}) => {
           if (data && data.status === 200)

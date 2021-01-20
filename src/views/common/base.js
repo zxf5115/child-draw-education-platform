@@ -90,6 +90,7 @@ export default {
           'member_nickname': this.dataForm.member_nickname,
           'archive_age': this.dataForm.archive_age,
           'course_title': this.dataForm.course_title,
+          'goods_title': this.dataForm.goods_title,
           'course_start_time': this.dataForm.course_start_time,
         })
       }).then(({data}) => {
