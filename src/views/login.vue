@@ -25,11 +25,6 @@
         </div>
         <div class="copyright" v-html="this.copyright"></div>
       </el-main>
-      <el-aside width="500px" class="login-broadside">
-        <p class="describe">
-          {{ this.website_description }}
-        </p>
-      </el-aside>
     </el-container>
   </div>
 </template>
