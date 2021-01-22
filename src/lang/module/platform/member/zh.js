@@ -6,6 +6,10 @@ export const member = {
   delete: '删除学员',
   export: '导出学员',
   archive_info: '学员档案',
+  view_order: '查看订单',
+  course_production: '课程作品',
+  upload_finish: '已上传',
+  upload_wait: '未上传',
 
   member_no: '学员ID',
   avatar: '宝宝头像',

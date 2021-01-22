@@ -132,36 +132,63 @@
             <span>{{ $t('organization.course_info') }}</span>
           </div>
           <div class="text item">
-            <el-table :data="dataForm.order" v-loading="dataListLoading" height="300">
+            <el-table :data="dataList" v-loading="dataListLoading" height="300">
 
-              <el-table-column prop="title" :label="$t('course.title')" width="200">
-              </el-table-column>
-
-              <el-table-column prop="title" :label="$t('course.title')" width="200">
-              </el-table-column>
-
-              <el-table-column prop="title" :label="$t('course.title')" width="200">
-              </el-table-column>
-
-              <el-table-column prop="title" :label="$t('course.title')" width="200">
-              </el-table-column>
-
-              <el-table-column prop="title" :label="$t('course.title')" width="200">
-              </el-table-column>
-
-              <el-table-column prop="title" :label="$t('course.title')" width="200">
-              </el-table-column>
-
-              <el-table-column :label="$t('common.handle')" fixed="right">
+              <el-table-column :label="$t('course.title')">
                 <template slot-scope="scope">
-                  <el-button v-if="isAuth('module:member:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_member_view', query: {id: scope.row.id}})">
-                    {{ $t('common.view') }}
+                  <span v-if="scope.row.course">
+                    {{ scope.row.course.title }}
+                  </span>
+                </template>
+              </el-table-column>
+
+              <el-table-column :label="$t('course.semester')" width="200">
+                <template slot-scope="scope">
+                  <span v-if="scope.row.course">
+                    {{ scope.row.course.semester.text }}
+                  </span>
+                </template>
+              </el-table-column>
+
+              <el-table-column :label="$t('course.course_start_time')" width="200">
+                <template slot-scope="scope">
+                  <span v-if="scope.row.course">
+                    {{ scope.row.course.course_start_time }}
+                  </span>
+                </template>
+              </el-table-column>
+
+              <el-table-column prop="order_no" :label="$t('order.course.order_no')" width="200">
+              </el-table-column>
+
+              <el-table-column prop="pay_money" :label="$t('order.course.pay_money')" width="200">
+              </el-table-column>
+
+              <el-table-column prop="create_time" :label="$t('order.course.create_time')" width="200">
+              </el-table-column>
+
+              <el-table-column :label="$t('common.handle')" fixed="right" width="240">
+                <template slot-scope="scope">
+                  <el-button v-if="isAuth('module:order:course:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_order_course_view', query: {id: scope.row.id}})">
+                    {{ $t('member.view_order') }}
                   </el-button>
 
-
+                  <el-button v-if="isAuth('module:member:course')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_member_course', query: {id: dataForm.id}})">
+                    {{ $t('member.course_production') }}
+                  </el-button>
                 </template>
               </el-table-column>
             </el-table>
+            <div class="admin_table_main_pagination">
+              <el-pagination
+                @size-change="sizeChangeHandle"
+                @current-change="currentChangeHandle"
+                :page-size="pageSize"
+                :total="totalPage"
+                :current-page="pageIndex"
+                background layout="prev, pager, next,jumper,total">
+              </el-pagination>
+            </div>
           </div>
         </el-card>
       </div>
@@ -274,11 +301,37 @@
             }
           })
         }).catch(() => {})
-      }
+      },
+      // 获取数据列表
+      getDataList () {
+        this.dataListLoading = true
+        this.$http({
+          url: this.$http.adornUrl('/order/course/list'),
+          method: 'get',
+          params: this.$http.adornParams({
+            'page': this.pageIndex,
+            'limit': this.pageSize,
+          })
+        }).then(({data}) => {
+          if (data && data.status === 200)
+          {
+            this.dataList = data.data.data
+            this.totalPage = data.data.total
+          }
+          else
+          {
+            this.dataList = []
+            this.totalPage = 0
+            this.$message.error(data.message)
+          }
+          this.dataListLoading = false
+        })
+      },
     },
     created(request)
     {
       this.init();
+      this.getDataList();
     }
   };
 </script>

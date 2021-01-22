@@ -11,6 +11,7 @@ export const production = {
   approval_total: '点赞',
   comment_total: '评论',
   create_time: '上传时间',
+  is_upload: '是否上传',
 
   comment: {
     content: '评论信息',
