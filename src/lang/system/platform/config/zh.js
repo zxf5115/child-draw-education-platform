@@ -8,6 +8,10 @@ export const config = {
   value: '配置值',
   params: '配置参数',
   content: '配置描述',
+
+  active: '开启',
+  inactive: '关闭',
+
   rules: {
     name: {
       require: '配置名称不能为空',
@@ -22,18 +26,18 @@ export const config = {
     },
   },
 
-  web_config: {
-    web_name: '网站名称',
-    web_url: '网络链接',
-    keywords: '网站关键字',
-    description: '网站描述',
-    logo: '网站logo',
-    mobile: '联系电话',
-    email: '联系邮箱',
-    icp: '网站备案号',
-    web_status: '网站状态',
-    web_clone_info: '网站关闭原因',
-  },
+  // web_config: {
+  //   web_name: '网站名称',
+  //   web_url: '网络链接',
+  //   keywords: '网站关键字',
+  //   description: '网站描述',
+  //   logo: '网站logo',
+  //   mobile: '联系电话',
+  //   email: '联系邮箱',
+  //   icp: '网站备案号',
+  //   web_status: '网站状态',
+  //   web_clone_info: '网站关闭原因',
+  // },
 
   category: {
     list: '分类列表',
