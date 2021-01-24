@@ -12,17 +12,18 @@
           </div>
           <!-- 左侧导航 -->
           <el-menu
-            background-color="#20222a"
-            text-color="#e1e1e1"
-            active-text-color="#fff"
+            background-color="#000"
+            text-color="#fff"
+            active-text-color="#409eff"
             @open="handleOpen"
             @close="handleClose"
             :collapse="isCollapse"
             :unique-opened="true"
+            :default-active="defaultActive"
             :router="true">
 
             <el-menu-item index="0" route="/index">
-              <icon name="icon-home" width="15" class="icon iconfont title_i"></icon>
+              <i class="el-custom-icon-console"></i>
               <span slot="title">
                 {{ $t('common.console') }}
               </span>
@@ -30,7 +31,7 @@
 
             <el-submenu :index="v.id+''" v-for="(v,k) in permisssion_menus" :key="k">
               <template slot="title">
-                <icon v-if="v.icon" :name="v.icon || ''" width="15" class="icon iconfont title_i"></icon>
+                <i :class="v.icon ? 'el-custom-icon-' + v.icon : ''"></i>
                 <span slot="title">{{v.title}}</span>
               </template>
               <el-menu-item-group v-if="v.navigation && v.navigation.length>0">
@@ -46,11 +47,8 @@
         <el-header height="102px">
           <div class="index_top_bg">
             <div class="index_header">
-              <i class="icon iconfont right_head_i"  :title="$t('common.pack')" @click="left_bar();">
-                <icon name="icon-folding" width="15" height="15"></icon>
-              </i>
-              <i class="icon iconfont right_head_i refresh" :title="$t('common.refresh')" @click="refresh()">
-                <icon name="icon-refresh" width="15" height="15"></icon>
+              <i class="el-custom-icon-zoom right_head_i"  :title="$t('common.pack')" @click="left_bar();"></i>
+              <i class="el-custom-icon-refresh right_head_i" :title="$t('common.refresh')" @click="refresh()">
               </i>
             </div>
 
@@ -79,15 +77,13 @@
             <div class="right_head_other">
               <el-link :underline="false">
                 <el-tooltip class="clear_cache" effect="dark" :content="$t('common.clear_cache')" placement="bottom-start">
-                  <i class="icon iconfont right_head_i" @click="clearCache">
-                    <icon name="icon-clear" width="18" height="18"></icon>
+                  <i class="el-custom-icon-clear" @click="clearCache">
                   </i>
                 </el-tooltip>
               </el-link>
               <router-link :to="{name: 'user_message_list'}">
                 <el-badge :is-dot="this.isUnRead" class="item" id="dot">
-                  <i class="icon iconfont right_head_i" :title="$t('common.message')">
-                    <icon name="icon-message" width="18" height="18"></icon>
+                  <i class="el-custom-icon-notice" :title="$t('common.message')">
                   </i>
                 </el-badge>
               </router-link>
@@ -124,9 +120,10 @@
       return {
         loading: true,
         isCollapse:false, // 侧边栏缩进打开
-        leftBarWidth:"185px", // 左侧宽度
+        leftBarWidth:"200px", // 左侧宽度
         isShow:true, // 显示全部
         isUnRead:false, // 是否存在未读消息
+        defaultActive: '0',
         permisssion_menus:[],
         user_info:{},
       };
@@ -156,7 +153,7 @@
         }
         else
         {
-          this.leftBarWidth = "185px";
+          this.leftBarWidth = "200px";
           this.isShow = true;
         }
       },
@@ -209,6 +206,20 @@
           }
         })
       },
+      getCurrentActive:function(){
+        let _this = this;
+        _this.$http({
+          url: _this.$http.adornUrl(`/menu/active`),
+          method: 'post',
+          params: _this.$http.adornParams({
+            url: this.$route.path
+          })
+        }).then(({data}) => {
+          if (data && data.status === 200) {
+            _this.defaultActive = data.data + '' || '0';
+          }
+        })
+      },
       set_url: function(url) {
         if(url.indexOf('/') == 0)
         {
@@ -224,6 +235,7 @@
     created() {
       this.getUserInfo();
       this.getUnreadMessage();
+      this.getCurrentActive();
       this.getPermissionMenus();
     }
   };
@@ -255,6 +267,12 @@
       color:#cfcfcf;
       padding-right: 15px;
     }
+  }
+  .el-menu-item i {
+    color: #e1e1e1;
+  }
+  .is-active i {
+    color: #409eff;
   }
   .el-scrollbar{
     height: 100%;

@@ -14,6 +14,7 @@
   export default {
     data(){
       return{
+        url: '',
         name:['控制台'],
       }
     },
@@ -21,9 +22,9 @@
       $route(to) {
         let _this = this;
         this.$http({
-          url: _this.$http.adornUrl(`/menu/get_bread_nav`),
+          url: _this.$http.adornUrl(`/menu/track`),
           method: 'post',
-          params: { url:to.path }
+          params: { url: to.path }
         }).then(({data}) => {
           _this.name = []
 
@@ -33,14 +34,28 @@
             });
           }
         })
-
       }
     },
-    props:{
-      menu_id:String,
-    },
-    created(){
+    methods: {
+      getBreadNav() {
+        let _this = this;
+        this.$http({
+          url: _this.$http.adornUrl(`/menu/track`),
+          method: 'post',
+          params: { url: this.$route.path }
+        }).then(({data}) => {
+          _this.name = []
 
+          if (data && data.status === 200) {
+            data.data.forEach(item => {
+              _this.name.push(item);
+            });
+          }
+        })
+      }
+    },
+    mounted() {
+      this.getBreadNav()
     }
   };
 </script>

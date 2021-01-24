@@ -3,8 +3,6 @@ import App from './App'
 import router from './router'
 
 
-// 自定义
-import './assets/css/style.css' // 公共CSS
 import i18n from './lang'
 import VueCookie from 'vue-cookie'
 import store from './store'
