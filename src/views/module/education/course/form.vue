@@ -41,6 +41,15 @@
             <el-input type="textarea" rows="1" v-model="dataForm.description" :placeholder="$t('common.please_input')+$t('course.description')"></el-input>
           </el-form-item>
 
+          <el-form-item class="mavon" :label="$t('course.picture')" prop="picture">
+            <el-upload :action="this.$http.adornUrl('/file/picture')" list-type="picture-card" :headers="upload_headers" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"  :on-success="handlePictureSuccess" :before-upload="beforePictureUpload" :file-list="pictureList">
+              <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="dialogVisible">
+              <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
+          </el-form-item>
+
           <el-form-item :label="$t('course.apply_time')" prop="apply_time">
             <el-date-picker format="yyyy-MM-dd" v-model="dataForm.apply_time" type="daterange" :range-separator="$t('common.to')" :start-placeholder="$t('common.start_time')" :end-placeholder="$t('common.end_time')"></el-date-picker>
           </el-form-item>
@@ -107,6 +116,9 @@
       return {
         model: 'education/course',
         upload_headers:{},
+        dialogImageUrl: '',
+        dialogVisible: false,
+        pictureList: [],
         coursewareList: [],
         unlockList: [],
         contentEditor: '',
@@ -120,6 +132,7 @@
           semester : 1,
           present : '',
           description: '',
+          picture: [],
           apply_time: '',
           course_start_time: '',
           real_price: 0,
@@ -177,11 +190,14 @@
                 this.dataForm.semester          = data.data.semester.value
                 this.dataForm.present           = data.data.present
                 this.dataForm.description       = data.data.description
+                this.dataForm.picture           = data.data.pictureData
                 this.dataForm.apply_time        = data.data.apply_time
                 this.dataForm.course_start_time = data.data.course_start_time
                 this.dataForm.real_price        = data.data.real_price
                 this.dataForm.line_price        = data.data.line_price
                 this.dataForm.class_size        = data.data.class_size
+
+                this.pictureList = data.data.pictureList
 
                 if(data.data.detail)
                 {
@@ -208,6 +224,7 @@
                 'semester': this.dataForm.semester,
                 'present': this.dataForm.present,
                 'description': this.dataForm.description,
+                'picture': this.dataForm.picture,
                 'apply_time': this.dataForm.apply_time,
                 'course_start_time': this.dataForm.course_start_time,
                 'real_price': this.dataForm.real_price,
@@ -302,6 +319,13 @@
             this.$message.error(this.$t(data.message))
           }
         })
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+      },
+      handlePictureSuccess(res, file) {
+        this.dataForm.picture.push(res.data);
       },
     },
     created() {

@@ -9,7 +9,7 @@ export const course = {
   teacher_info: '招生老师',
 
   title: '课程名字',
-  picture: '课程封面',
+  picture: '课程图片',
   semester: '课程周期',
   description: '优惠说明',
   apply_time: '报名时间',

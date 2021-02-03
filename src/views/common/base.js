@@ -193,6 +193,9 @@ export default {
 
       return isPicture && isLt8M;
     },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
   },
   filters: {
     formatMoney: function(value) {
