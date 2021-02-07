@@ -26,19 +26,6 @@ export const config = {
     },
   },
 
-  // web_config: {
-  //   web_name: '网站名称',
-  //   web_url: '网络链接',
-  //   keywords: '网站关键字',
-  //   description: '网站描述',
-  //   logo: '网站logo',
-  //   mobile: '联系电话',
-  //   email: '联系邮箱',
-  //   icp: '网站备案号',
-  //   web_status: '网站状态',
-  //   web_clone_info: '网站关闭原因',
-  // },
-
   category: {
     list: '分类列表',
     from: '分类操作',
@@ -62,18 +49,14 @@ export const config = {
   },
 
   agreement: {
-    list: '协议列表',
-    from: '协议操作',
+    user: '用户协议',
+    about: '关于我们',
+
     name: '协议名称',
-    title: '协议标题',
     content: '协议内容',
     rules: {
       name: {
         require: '协议名称不能为空',
-        length: '长度在 1 到 50 个字符',
-      },
-      title: {
-        require: '协议标题不能为空',
         length: '长度在 1 到 50 个字符',
       },
       content: {
