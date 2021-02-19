@@ -110,17 +110,17 @@
           <div slot="header" class="clearfix">
             <span>{{ $t('teacher.recruitment.dividend_income') }}</span>
           </div>
-          <div class="text item">
+          <div class="text item color">
             <el-row>
               <el-form ref="form" :model="dataForm" label-width="80">
-                <el-col :span="6">
-                  <el-form-item :label="$t('teacher.recruitment.dividend_income_total')" label-width="80" v-if="dataForm.archive">
-                    {{ dataForm.archive.id_card_no }}
+                <el-col class="red" :span="6">
+                  <el-form-item :label="$t('teacher.recruitment.dividend_income_total')" label-width="80">
+                    {{ shareMoney.total_money || 0 }}
                   </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col class="red" :span="6">
                   <el-form-item :label="$t('teacher.recruitment.buy_course_total')" label-width="80">
-                    {{ dataForm.username }}
+                    {{ shareMoney.total_number || 0 }}
                   </el-form-item>
                 </el-col>
               </el-form>
@@ -173,6 +173,7 @@
           id: 0,
           condition: ''
         },
+        shareMoney: {},
         dataRule: {}
       };
     },
@@ -194,6 +195,16 @@
               if (data && data.status === 200) {
                 this.dataForm   = data.data
               }
+            }).then(() => {
+              this.$http({
+                url: this.$http.adornUrl(`/teacher/recruitment/money/view/${this.dataForm.id}`),
+                method: 'get',
+                params: this.$http.adornParams()
+              }).then(({data}) => {
+                if (data && data.status === 200) {
+                  this.shareMoney = data.data
+                }
+              })
             })
           }
         })

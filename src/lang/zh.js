@@ -30,6 +30,8 @@ import  {order}  from './module/platform/order/zh'
 
 import  {goods}  from './module/platform/goods/zh'
 
+import  {complain}  from './module/platform/complain/zh'
+
 export default {
 
   // 公共
@@ -127,5 +129,10 @@ export default {
   // 商品
   goods: {
     ...goods
+  },
+
+  // 投诉
+  complain: {
+    ...complain
   },
 }
