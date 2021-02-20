@@ -7,9 +7,11 @@
           <div>今日新增用户</div>
           <div class="unline"></div>
           <div class="default_total">
-            <font style="font-size:30px;">111</font>
+            <font style="font-size:30px;">
+              {{ statistical.today_member_total }}
+            </font>
             <div class="unline"></div>
-            <div class="default_day_sale">用户总数：11111</div>
+            <div class="default_day_sale">用户总数：<span class="blue">{{ statistical.member_total }}</span></div>
           </div>
         </el-card>
       </el-col>
@@ -18,9 +20,11 @@
           <div>今日新增课程订单</div>
           <div class="unline"></div>
           <div class="default_total">
-            <font style="font-size:30px;">111</font>
+            <font style="font-size:30px;">
+              {{ statistical.today_course_total }}
+            </font>
             <div class="unline"></div>
-            <div class="default_day_sale">课程订单总数：11111</div>
+            <div class="default_day_sale">课程订单总数：<span class="blue">{{ statistical.course_total }}</span></div>
           </div>
         </el-card>
       </el-col>
@@ -29,9 +33,11 @@
           <div>今日新增商品订单</div>
           <div class="unline"></div>
           <div class="default_total">
-            <font style="font-size:30px;">111</font>
+            <font style="font-size:30px;">
+              {{ statistical.today_goods_total }}
+            </font>
             <div class="unline"></div>
-            <div class="default_day_sale">商品订单总数：11111</div>
+            <div class="default_day_sale">商品订单总数：<span class="blue">{{ statistical.goods_total }}</span></div>
           </div>
         </el-card>
       </el-col>
@@ -40,9 +46,11 @@
           <div>今日销售额（元）</div>
           <div class="unline"></div>
           <div class="default_total">
-            <font style="font-size:30px;">111</font>
+            <font style="font-size:30px;">
+              {{ statistical.today_money_total }}
+            </font>
             <div class="unline"></div>
-            <div class="default_day_sale">销售总额：11111</div>
+            <div class="default_day_sale">销售总额：<span class="blue">{{ statistical.money_total }}</span></div>
           </div>
         </el-card>
       </el-col>
@@ -64,9 +72,15 @@
           <div>收到投诉</div>
           <div class="unline"></div>
           <div class="default_total">
-            <font style="font-size:30px;">111</font>
+            <font style="font-size:30px;">
+              {{ statistical.complain_total }}
+            </font>
             <div class="unline"></div>
-            <div class="default_day_sale blue right">去查看</div>
+            <div class="default_day_sale blue right">
+              <el-button type="text" @click="$router.push({name: 'module_complain_list'})">
+                去查看
+              </el-button>
+            </div>
           </div>
         </el-card>
       </el-col>
@@ -75,9 +89,15 @@
           <div>待发货订单</div>
           <div class="unline"></div>
           <div class="default_total">
-            <font style="font-size:30px;">111</font>
+            <font style="font-size:30px;">
+              {{ statistical.wait_order_total }}
+            </font>
             <div class="unline"></div>
-            <div class="default_day_sale blue right">去查看</div>
+            <div class="default_day_sale blue right">
+              <el-button type="text" @click="$router.push({name: 'module_order_goods_list', query: {pay_status: 1, order_status: 0}})">
+                去查看
+              </el-button>
+            </div>
           </div>
         </el-card>
       </el-col>
@@ -87,69 +107,48 @@
 </template>
 
 <script>
-  import VeHistogram from 'v-charts/lib/histogram.common'
-  import VePie from 'v-charts/lib/pie.common'
-  import VeBar from 'v-charts/lib/bar.common'
-  import VeRing from 'v-charts/lib/ring.common'
-  import VeLine from 'v-charts/lib/line.common'
-  import VeFunnel from 'v-charts/lib/funnel.common'
   export default {
-    components: {
-      VeHistogram,
-      VePie,
-      VeBar,
-      VeRing,
-      VeLine,
-      VeFunnel,
-    },
     data() {
       return {
-        courseData: {
-          columns: ['title', 'value'],
-          rows: []
+        statistical: {
+          today_member_total: 0,
+          member_total: 0,
+          today_course_total: 0,
+          course_total: 0,
+          today_goods_total: 0,
+          goods_total: 0,
+          today_money_total: 0,
+          money_total: 0,
+          complain_total: 0,
+          wait_order_total: 0,
         },
-
-        userColors: ['#00978b','#ff6600'],
-        userData: {
-          columns: ['title', '会员数', '机构数'],
-          rows: []
-        },
-
-        keywordSettings: {
-          roseType: 'radius'
-        },
-        keywordData: {
-          columns: ['title', 'value'],
-          rows: []
-        },
-
-        equipmentData: {
-          columns: ['title', 'value'],
-          rows: []
-        },
-
-        questionSettings: {
-          useDefaultOrder: true,
-          filterZero: true
-        },
-        questionData: {
-          columns: ['title', 'value'],
-          rows: []
-        },
-
-        studySettings: {
-          area: true
-        },
-        studyColors: ['#ff2211'],
-        studyData: {
-          columns: ['title', '学习人数'],
-          rows: []
-        }
       };
     },
     methods: {
+      init() {
+        this.$http({
+          url: this.$http.adornUrl(`/index/data`),
+          method: 'get',
+          params: this.$http.adornParams()
+        }).then(({data}) => {
+          if (data && data.status === 200) {
+            this.statistical.today_member_total = data.data.today_member_total
+            this.statistical.member_total       = data.data.member_total
+            this.statistical.today_course_total = data.data.today_course_total
+            this.statistical.course_total       = data.data.course_total
+            this.statistical.today_goods_total  = data.data.today_goods_total
+            this.statistical.goods_total        = data.data.goods_total
+            this.statistical.today_money_total  = data.data.today_money_total
+            this.statistical.money_total        = data.data.money_total
+            this.statistical.complain_total     = data.data.complain_total
+            this.statistical.wait_order_total   = data.data.wait_order_total
+          }
+        })
+      }
     },
-    mounted(){
+    created(request)
+    {
+      this.init();
     }
   };
 </script>

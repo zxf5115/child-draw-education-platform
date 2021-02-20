@@ -136,11 +136,10 @@
         dataForm: [
           'order_no',
           'goods_title',
+          'pay_status',
+          'order_status',
         ]
       };
-    },
-    created() {
-      this.getDataList()
     },
     methods: {
       loadOrderMoneyTotal() {
@@ -158,6 +157,11 @@
     },
     mounted () {
       this.loadOrderMoneyTotal();
+    },
+    created() {
+      this.dataForm.pay_status = this.$route.query.pay_status;
+      this.dataForm.order_status = this.$route.query.order_status;
+      this.getDataList()
     },
   };
 </script>

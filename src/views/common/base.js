@@ -66,7 +66,6 @@ export default {
           'level_id': this.dataForm.level_id,
           'unit_id': this.dataForm.unit_id,
 
-          'order_status': this.dataForm.order_status,
           'add_time': this.dataForm.add_time,
           'valid_time': this.dataForm.valid_time,
           'create_time': this.dataForm.create_time,
@@ -86,6 +85,8 @@ export default {
           'teacher_name': this.dataForm.teacher_name,
 
           'order_no': this.dataForm.order_no,
+          'pay_status': this.dataForm.pay_status,
+          'order_status': this.dataForm.order_status,
           'courseware_title': this.dataForm.courseware_title,
           'member_nickname': this.dataForm.member_nickname,
           'archive_age': this.dataForm.archive_age,

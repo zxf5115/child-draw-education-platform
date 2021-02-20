@@ -19,7 +19,9 @@
         <el-form label-width="100px" ref="dataForm" :model="dataForm" :rules="dataRule">
 
           <el-form-item :label="$t('order.goods.logistics.company_name')" prop="company_name">
-            <el-input :placeholder="$t('common.please_input')+$t('order.goods.logistics.company_name')" v-model="dataForm.company_name"></el-input>
+            <el-select v-model="dataForm.company_name" :placeholder="$t('common.please_select')+$t('advertising.position.title')">
+              <el-option v-for="(v,k) in expressList" :label="v.title" :key="k" :value="v.value"></el-option>
+            </el-select>
           </el-form-item>
 
           <el-form-item :label="$t('order.goods.logistics.logistics_no')" prop="logistics_no">
@@ -47,6 +49,7 @@
     data() {
       return {
         model: 'order/goods/logistics',
+        expressList: [],
         dataForm:
         {
           id: 0,
@@ -119,13 +122,28 @@
       resetForm:function()
       {
         this.$refs['dataForm'].resetFields();
-      }
+      },
+      loadExpressList() {
+        this.$http({
+          url: this.$http.adornUrl('/common/express/company/list'),
+          method: 'get',
+          params: this.$http.adornParams({})
+        }).then(({data}) => {
+          if (data && data.status === 200) {
+            this.expressList = data.data
+          } else {
+            this.$message.error(this.$t(data.message))
+          }
+        })
+      },
     },
     created() {
       this.init();
 
       this.dataForm.order_id = this.$route.query.order_id;
       this.dataForm.member_id = this.$route.query.member_id;
+
+      this.loadExpressList();
     }
   };
 </script>
