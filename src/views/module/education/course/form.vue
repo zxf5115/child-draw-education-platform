@@ -268,7 +268,7 @@
             headers: {
               'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
-            url: this.$http.adornUrl('/file/course')
+            url: this.$http.adornUrl('/file/batchPicture')
           },
         })
       },
@@ -292,7 +292,7 @@
             headers: {
               'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
-            url: this.$http.adornUrl('/file/course')
+            url: this.$http.adornUrl('/file/batchPicture')
           },
         })
       },

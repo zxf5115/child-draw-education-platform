@@ -20,6 +20,19 @@
         </div>
       </div>
 
+      <div class="admin_main_block_top">
+        <div class="admin_main_block_left">
+          <div>
+            <el-input v-model="dataForm.title" :placeholder="$t('common.please_input') + $t('problem.title')" clearable>
+            </el-input>
+          </div>
+          <div>
+            <el-button icon="el-icon-search" @click="getDataList(true)">
+              {{ $t('common.search') }}
+            </el-button>
+          </div>
+        </div>
+      </div>
       <div class="admin_table_main">
         <el-table :data="dataList" v-loading="dataListLoading" @selection-change="selectionChangeHandle">
 
@@ -70,7 +83,9 @@
     data() {
       return {
         model: 'common/problem',
-        dataForm: []
+        dataForm: [
+          'title'
+        ]
       };
     },
     created() {
