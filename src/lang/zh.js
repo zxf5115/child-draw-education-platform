@@ -34,6 +34,8 @@ import  {complain}  from './module/platform/complain/zh'
 
 import  {financial}  from './module/platform/financial/zh'
 
+import  {problem}  from './module/platform/common/problem/zh'
+
 export default {
 
   // 公共
@@ -141,5 +143,10 @@ export default {
   // 财务
   financial: {
     ...financial
+  },
+
+  // 常见问题
+  problem: {
+    ...problem
   }
 }

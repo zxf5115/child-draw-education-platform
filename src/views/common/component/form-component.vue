@@ -32,8 +32,6 @@
             <el-radio v-for="(v,k) in item.params" :key="k" :label="v.value">{{ v.text }}</el-radio>
           </el-radio-group>
 
-
-
           <!-- 开关输入项 -->
           <el-switch v-else-if="item.type == 'switch'" v-model="dataForm[item.title]" active-value="1" inactive-value="2" :active-text="$t('config.active')" :inactive-text="$t('config.inactive')" @input="handleValue">
           </el-switch>
@@ -149,6 +147,8 @@
         let url = res.data.url
 
         this.dataForm[title] = url;
+
+        console.log(url);
       },
       beforeAvatarUpload(file) {
         const isPicture = (file.type === 'image/jpeg' || file.type === 'image/png');
