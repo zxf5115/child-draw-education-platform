@@ -32,6 +32,8 @@ import  {goods}  from './module/platform/goods/zh'
 
 import  {complain}  from './module/platform/complain/zh'
 
+import  {financial}  from './module/platform/financial/zh'
+
 export default {
 
   // 公共
@@ -135,4 +137,9 @@ export default {
   complain: {
     ...complain
   },
+
+  // 财务
+  financial: {
+    ...financial
+  }
 }

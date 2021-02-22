@@ -27,6 +27,13 @@
           <el-input v-else-if="item.type == 'textarea'" type="textarea" maxlength="5000" :rows="8" show-word-limit v-model="dataForm[item.title]" :clearable="true" @input="handleValue">
           </el-input>
 
+          <!-- 单选输入项 -->
+          <el-radio-group v-else-if="item.type == 'radio'" v-model="dataForm[item.title]" @input="handleValue">
+            <el-radio v-for="(v,k) in item.params" :key="k" :label="v.value">{{ v.text }}</el-radio>
+          </el-radio-group>
+
+
+
           <!-- 开关输入项 -->
           <el-switch v-else-if="item.type == 'switch'" v-model="dataForm[item.title]" active-value="1" inactive-value="2" :active-text="$t('config.active')" :inactive-text="$t('config.inactive')" @input="handleValue">
           </el-switch>
@@ -106,8 +113,16 @@
             {
               this.formItemList = data.data;
 
-              this.formItemList.forEach(({ title, value }) => {
-                this.dataForm[title] = value;
+              this.formItemList.forEach(({ title, value, type }) => {
+
+                if('radio' == type)
+                {
+                  this.dataForm[title] = parseInt(value);
+                }
+                else
+                {
+                  this.dataForm[title] = value;
+                }
               });
             }
           })

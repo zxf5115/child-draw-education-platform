@@ -61,9 +61,15 @@
           <div>红包提现审核</div>
           <div class="unline"></div>
           <div class="default_total">
-            <font style="font-size:30px;">111</font>
+            <font style="font-size:30px;">
+              {{ statistical.wait_money_total }}
+            </font>
             <div class="unline"></div>
-            <div class="default_day_sale blue right">去审核</div>
+            <div class="default_day_sale blue right">
+              <el-button type="text" @click="$router.push({name: 'module_financial_withdrawal_list'})">
+                去审核
+              </el-button>
+            </div>
           </div>
         </el-card>
       </el-col>
@@ -119,6 +125,7 @@
           goods_total: 0,
           today_money_total: 0,
           money_total: 0,
+          wait_money_total: 0,
           complain_total: 0,
           wait_order_total: 0,
         },
@@ -140,6 +147,7 @@
             this.statistical.goods_total        = data.data.goods_total
             this.statistical.today_money_total  = data.data.today_money_total
             this.statistical.money_total        = data.data.money_total
+            this.statistical.wait_money_total   = data.data.wait_money_total
             this.statistical.complain_total     = data.data.complain_total
             this.statistical.wait_order_total   = data.data.wait_order_total
           }
@@ -156,130 +164,19 @@
   .unline {
     margin: 15px 0;
   }
-  .default_program {
-    text-align: center;
-    width: 100%;
-  }
-  .default_program ul li {
-    float: left;
-    width: 22%;
-    background: #f9f9f9;
-    margin-right: 4%;
-    margin-bottom: 10px;
-  }
-  .default_program ul li:nth-child(4n) {
-    margin-right: 0;
-  }
-  .default_program ul li:hover {
-    background: #f1f1f1;
-  }
-  .default_program2 ul li {
-    float: left;
-    width: 48%;
-    background: #f9f9f9;
-    margin-right: 4%;
-    margin-bottom: 18px;
-    height: 82px;
-    padding: 10px;
-    box-sizing: border-box;
-    font-size: 12px;
-    color: #999;
-  }
-  .default_program2 ul li:nth-child(2n) {
-    margin-right: 0;
-  }
-  .default_program2 ul li:nth-child(3) {
-    width: 100%;
-  }
-  .default_program2 ul li:hover {
-    background: #f3f3f3;
-  }
-  .default_program .i_backgraounds {
-    text-align: center;
-    margin: 0 auto;
-    display: block;
-    padding: 5px 0;
-  }
-  .default_program2 p {
-    line-height: 55px;
-    font-size: 22px;
-    color: #303133;
-  }
-  .i_backgraounds i {
-    font-size: 28px;
-  }
-  .default_program p {
-    text-align: center;
-    background: #fff;
-    line-height: 30px;
-    font-size: 12px;
-    clear: both;
-  }
   .default_block_col {
     margin-bottom: 20px;
-  }
-  .default_copyright ul li {
-    line-height: 66px;
-    border-bottom: 1px solid #efefef;
-  }
-  .default_copyright ul li:nth-child(3) {
-    border-bottom: none;
-  }
-  .default_copyright ul li span {
-    margin-right: 60px;
-  }
-  .default_tongbi_left {
-    float: left;
-  }
-  .default_tongbi_right {
-    float: left;
-    margin-left: 40px;
-  }
-  .default_tongbi:after {
-    clear: both;
-    content: "";
-    display: block;
   }
   .default_total:after {
     clear: both;
     content: "";
     display: block;
   }
-  .default_tongbi {
-    margin-top: 20px;
-  }
   .default_day_sale {
     margin-top: 30px;
     margin-bottom: 45px;
   }
-  .default_tubiao {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  .default_hot_goods ul li {
-    margin-top: 20px;
-    overflow: hidden;
-  }
-  .default_hot_goods ul li span {
-    border-radius: 50%;
-    background: #f5f5f5;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    display: block;
-    float: left;
-    margin-right: 8px;
-  }
-  .default_hot_goods ul li:nth-child(1) span {
-    background: #314659;
-    color: #fff;
-  }
-  .default_hot_goods ul li:nth-child(2) span {
-    background: #314659;
-    color: #fff;
-  }
-  .default_hot_goods ul li:nth-child(3) span {
-    background: #314659;
-    color: #fff;
+  .el-button--mini, .el-button--small {
+    font-size: 15px;
   }
 </style>

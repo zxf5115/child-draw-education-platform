@@ -88,11 +88,13 @@ export default {
           'pay_status': this.dataForm.pay_status,
           'order_status': this.dataForm.order_status,
           'courseware_title': this.dataForm.courseware_title,
+          'member_username': this.dataForm.member_username,
           'member_nickname': this.dataForm.member_nickname,
           'archive_age': this.dataForm.archive_age,
           'course_title': this.dataForm.course_title,
           'goods_title': this.dataForm.goods_title,
           'course_start_time': this.dataForm.course_start_time,
+          'account_payment_account': this.dataForm.account_payment_account,
         })
       }).then(({data}) => {
         if (data && data.status === 200)

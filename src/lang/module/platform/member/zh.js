@@ -128,5 +128,10 @@ export const member = {
     city: '市',
     county: '县',
     address: '收货地址',
+  },
+
+  account: {
+    payment_name: '支付宝姓名',
+    payment_account: '支付宝账号',
   }
 }
