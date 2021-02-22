@@ -140,7 +140,7 @@
             headers: {
               'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
-            url: this.$http.adornUrl('/file/batchPicture')
+            url: this.$http.adornUrl('/file/batchRichText')
           },
         })
       },
