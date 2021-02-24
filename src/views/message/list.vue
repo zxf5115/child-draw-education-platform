@@ -20,7 +20,6 @@
           </div>
         </div>
       </div>
-
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
           <div>
