@@ -126,9 +126,9 @@
               </el-form>
             </el-row>
             <el-row>
-              <el-table :data="dataForm.settlement" v-loading="dataListLoading" height="300">
+              <el-table :data="dataList" v-loading="dataListLoading" @selection-change="selectionChangeHandle" height="300">
 
-                <el-table-column prop="dividend_income" :label="$t('teacher.recruitment.dividend_income')">
+                <el-table-column prop="money" :label="$t('teacher.recruitment.dividend_income')">
                 </el-table-column>
 
                 <el-table-column prop="buy_course_number" :label="$t('teacher.recruitment.buy_course_number')">
@@ -138,9 +138,15 @@
                 </el-table-column>
 
                 <el-table-column prop="settlement_time" :label="$t('teacher.recruitment.settlement_time')">
+                  <template slot-scope="scope">
+                    {{ scope.row.settlement_time.text }}
+                  </template>
                 </el-table-column>
 
                 <el-table-column prop="settlement_type" :label="$t('teacher.recruitment.settlement_type')">
+                  <template slot-scope="scope">
+                    {{ scope.row.type.text }}
+                  </template>
                 </el-table-column>
 
                 <el-table-column :label="$t('common.handle')" fixed="right">
@@ -174,7 +180,8 @@
           condition: ''
         },
         shareMoney: {},
-        dataRule: {}
+        dataRule: {},
+        dataList: []
       };
     },
     methods:
@@ -203,6 +210,19 @@
               }).then(({data}) => {
                 if (data && data.status === 200) {
                   this.shareMoney = data.data
+                }
+              })
+            }).then(() => {
+              this.$http({
+                url: this.$http.adornUrl(`/teacher/recruitment/money/extract/list`),
+                method: 'get',
+                params: this.$http.adornParams({
+                  member_id: this.dataForm.id
+                })
+              }).then(({data}) => {
+                if (data && data.status === 200) {
+                  this.dataList = data.data.data
+                  this.totalPage = data.data.total
                 }
               })
             })
