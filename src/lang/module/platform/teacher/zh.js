@@ -2,6 +2,7 @@ export const teacher = {
   list: '学员列表',
   from: '学员操作',
   view: '学员详情',
+  settlement_view: '查看列表',
 
   member_no: '学员ID',
   avatar: '宝宝头像',
@@ -23,6 +24,7 @@ export const teacher = {
 
   freeze: '冻结',
   thaw: '解冻',
+  settlement: '结算',
 
   management: {
     list: '管理老师列表',
@@ -65,5 +67,14 @@ export const teacher = {
     settlement_status: '结算状态',
     settlement_time: '结算时间',
     settlement_type: '结算方式',
+  },
+
+  money: {
+    list: '结算列表',
+    from: '结算操作',
+    view: '结算详情',
+
+    money: '结算方式',
+    type: '结算金额',
   }
 }

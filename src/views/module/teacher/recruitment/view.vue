@@ -149,10 +149,14 @@
                   </template>
                 </el-table-column>
 
-                <el-table-column :label="$t('common.handle')" fixed="right">
+                <el-table-column :label="$t('common.handle')" fixed="right" width="220">
                   <template slot-scope="scope">
                     <el-button v-if="isAuth('module:member:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_member_view', query: {id: scope.row.id}})">
-                      {{ $t('common.view') }}
+                      {{ $t('teacher.settlement_view') }}
+                    </el-button>
+
+                    <el-button v-if="isAuth('module:teacher:recruitment:money:form')" type="danger" icon="el-icon-finished" @click="$router.push({name: 'module_teacher_recruitment_money_form', query: {id: scope.row.id, money_id: dataForm.id}})">
+                      {{ $t('teacher.settlement') }}
                     </el-button>
                   </template>
                 </el-table-column>
