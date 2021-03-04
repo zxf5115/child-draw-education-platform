@@ -139,13 +139,13 @@
 
                 <el-table-column prop="settlement_time" :label="$t('teacher.recruitment.settlement_time')">
                   <template slot-scope="scope">
-                    {{ scope.row.settlement_time.text }}
+                    {{ scope.row.settlement_time.text || '' }}
                   </template>
                 </el-table-column>
 
                 <el-table-column prop="settlement_type" :label="$t('teacher.recruitment.settlement_type')">
                   <template slot-scope="scope">
-                    {{ scope.row.type.text }}
+                    {{ scope.row.type.text || '' }}
                   </template>
                 </el-table-column>
 
