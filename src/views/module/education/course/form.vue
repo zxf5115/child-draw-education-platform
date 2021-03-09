@@ -74,6 +74,10 @@
             </el-input-number>
           </el-form-item>
 
+          <el-form-item :label="$t('course.sort')" prop="sort">
+            <el-input-number :placeholder="$t('common.please_input') + $t('course.sort')" :min="0" :max="100" v-model="dataForm.sort"></el-input-number>
+          </el-form-item>
+
           <el-form-item :label="$t('course.unlock.title')" prop="unlock_id">
             <el-select v-model="dataForm.unlock_id" :placeholder="$t('common.please_select')+$t('course.unlock.title')">
               <el-option v-for="(v,k) in unlockList" :label="v.title" :key="k" :value="v.id">
@@ -138,6 +142,7 @@
           real_price: 0,
           line_price: 0,
           class_size: 1,
+          sort: 0,
         },
         dataRule:
         {
@@ -196,6 +201,7 @@
                 this.dataForm.real_price        = data.data.real_price
                 this.dataForm.line_price        = data.data.line_price
                 this.dataForm.class_size        = data.data.class_size
+                this.dataForm.sort              = data.data.sort
 
                 this.pictureList = data.data.pictureList
 
@@ -230,6 +236,7 @@
                 'real_price': this.dataForm.real_price,
                 'line_price': this.dataForm.line_price,
                 'class_size': this.dataForm.class_size,
+                'sort': this.dataForm.sort,
                 'content': this.contentEditor.getValue(),
                 'plan': this.planEditor.getValue(),
               })

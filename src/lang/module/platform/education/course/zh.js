@@ -21,6 +21,7 @@ export const course = {
   management_number: '管理数量',
   apply_number: '报名人数',
   class_size: '管理人数',
+  sort: '课程排序',
   content: '课程详情',
   plan: '课程安排',
   level: '课程级别',
