@@ -57,7 +57,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.archive.birthday')" width="80">
+          <el-table-column :label="$t('member.archive.birthday')" width="100">
             <template slot-scope="scope" v-if="scope.row.archive">
               {{ scope.row.archive.birthday }}
             </template>
@@ -69,7 +69,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.archive.address')" width="150">
+          <el-table-column :label="$t('member.archive.address')" width="250">
             <template slot-scope="scope" v-if="scope.row.archive">
               {{ scope.row.archive.address }}
             </template>
