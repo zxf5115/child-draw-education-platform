@@ -8,6 +8,7 @@ export const courseware = {
   description: '课件介绍',
   is_permanent: '是否永久',
   time_limit: '课件限时',
+  sort: '课件排序',
   enable: '启用',
   disable: '停用',
 

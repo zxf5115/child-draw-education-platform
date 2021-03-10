@@ -41,6 +41,10 @@
             <el-date-picker format="yyyy-MM-dd" v-model="dataForm.valid_time" type="daterange" :range-separator="$t('common.to')" :start-placeholder="$t('common.start_time')" :end-placeholder="$t('common.end_time')"></el-date-picker>
           </el-form-item>
 
+          <el-form-item :label="$t('courseware.sort')" prop="sort">
+            <el-input-number :placeholder="$t('common.please_input') + $t('course.sort')" :min="0" :max="100" v-model="dataForm.sort"></el-input-number>
+          </el-form-item>
+
           <el-form-item>
             <el-button type="primary" @click="dataFormSubmit()">
               {{ $t('common.confirm') }}
@@ -73,6 +77,7 @@
           description: '',
           is_permanent: 2,
           valid_time: '',
+          sort: 0,
         },
         dataRule:
         {
@@ -104,6 +109,7 @@
                 this.dataForm.description  = data.data.description
                 this.dataForm.is_permanent = data.data.is_permanent.value
                 this.dataForm.valid_time   = data.data.valid_time
+                this.dataForm.sort         = data.data.sort
 
                 if(this.dataForm.is_permanent == 1)
                 {
@@ -127,6 +133,7 @@
                 'description': this.dataForm.description,
                 'is_permanent': this.dataForm.is_permanent,
                 'valid_time': this.dataForm.valid_time,
+                'sort': this.dataForm.sort,
               })
             }).then(({data}) => {
               if (data && data.status === 200) {
