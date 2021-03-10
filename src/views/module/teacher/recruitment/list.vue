@@ -95,7 +95,7 @@
           </el-table-column>
 
           <el-table-column :label="$t('teacher.recruitment.dividend_income')" width="80">
-            <template slot-scope="scope" vif="scope.row.share">
+            <template slot-scope="scope" v-if="scope.row.share">
               {{ scope.row.share.total_money }}
             </template>
           </el-table-column>
