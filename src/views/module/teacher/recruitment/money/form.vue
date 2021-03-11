@@ -61,22 +61,16 @@
     methods: {
       init ()
       {
-        this.dataForm.id = this.$route.query.id
         this.dataForm.money_id = this.$route.query.money_id
 
-        this.$nextTick(() => {
-          this.$refs['dataForm'].resetFields()
-          if (this.dataForm.id) {
-            this.$http({
-              url: this.$http.adornUrl(`/teacher/recruitment/money/extract/view/${this.dataForm.id}`),
-              method: 'get',
-              params: this.$http.adornParams()
-            }).then(({data}) => {
-              if (data && data.status === 200) {
-                this.dataForm.money = data.data.money
-                this.dataForm.type  = data.data.type.text
-              }
-            })
+        this.$http({
+          url: this.$http.adornUrl(`/teacher/recruitment/money/view/${this.dataForm.money_id}`),
+          method: 'get',
+          params: this.$http.adornParams()
+        }).then(({data}) => {
+          if (data && data.status === 200) {
+            this.dataForm.money = data.data.wait_money
+            this.dataForm.type  = '线下结算'
           }
         })
       },
@@ -85,10 +79,10 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/teacher/recruitment/money/extract/handle`),
+              url: this.$http.adornUrl(`/teacher/recruitment/money/handle`),
               method: 'post',
               data: this.$http.adornData({
-                'id': this.dataForm.id
+                'id': this.dataForm.money_id
               })
             }).then(({data}) => {
               if (data && data.status === 200) {

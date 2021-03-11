@@ -108,6 +108,24 @@
         </el-card>
         <el-card class="box-card mt10" shadow="never">
           <div slot="header" class="clearfix">
+            <span>{{ $t('teacher.recruitment.undividend_income') }}</span>
+          </div>
+          <div class="text item color">
+            <el-row>
+              <el-col :span="22">
+                <span class="mr10">{{ $t('teacher.recruitment.undividend_money') }}</span>
+                <span class="red">{{ shareMoney.wait_money || 0 }}</span>
+              </el-col>
+              <el-col :span="2">
+                <el-button v-if="isAuth('module:teacher:recruitment:money:form')" type="danger" icon="el-icon-finished" @click="$router.push({name: 'module_teacher_recruitment_money_form', query: {money_id: dataForm.id}})">
+                  {{ $t('teacher.settlement') }}
+                </el-button>
+              </el-col>
+            </el-row>
+          </div>
+        </el-card>
+        <el-card class="box-card mt10" shadow="never">
+          <div slot="header" class="clearfix">
             <span>{{ $t('teacher.recruitment.dividend_income') }}</span>
           </div>
           <div class="text item color">
@@ -131,7 +149,7 @@
                 <el-table-column prop="money" :label="$t('teacher.recruitment.dividend_income')">
                 </el-table-column>
 
-                <el-table-column prop="buy_course_number" :label="$t('teacher.recruitment.buy_course_number')">
+                <el-table-column prop="number" :label="$t('teacher.recruitment.buy_course_number')">
                 </el-table-column>
 
                 <el-table-column prop="settlement_status" :label="$t('teacher.recruitment.settlement_status')">
@@ -149,18 +167,25 @@
                   </template>
                 </el-table-column>
 
-                <el-table-column :label="$t('common.handle')" fixed="right" width="220">
+                <el-table-column :label="$t('common.handle')" fixed="right" width="120">
                   <template slot-scope="scope">
-                    <el-button v-if="isAuth('module:member:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_member_view', query: {id: scope.row.id}})">
+                    <el-button v-if="isAuth('module:teacher:recruitment:money:list')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_teacher_recruitment_money_list', query: {id: scope.row.id, money_id: dataForm.id}})">
                       {{ $t('teacher.settlement_view') }}
-                    </el-button>
-
-                    <el-button v-if="isAuth('module:teacher:recruitment:money:form')" type="danger" icon="el-icon-finished" @click="$router.push({name: 'module_teacher_recruitment_money_form', query: {id: scope.row.id, money_id: dataForm.id}})">
-                      {{ $t('teacher.settlement') }}
                     </el-button>
                   </template>
                 </el-table-column>
               </el-table>
+              <div class="admin_table_main_pagination">
+                <el-pagination
+                  @size-change="sizeChangeHandle"
+                  @current-change="currentChangeHandle"
+                  :page-sizes="[10, 50, 100, 500]"
+                  :page-size="pageSize"
+                  :total="totalPage"
+                  :current-page="pageIndex"
+                  background layout="prev, pager, next, jumper, total, sizes">
+                </el-pagination>
+              </div>
             </el-row>
           </div>
         </el-card>

@@ -59,11 +59,15 @@ export const teacher = {
     view: '招聘老师详情',
     info: '招聘老师信息',
 
+    undividend_income: '待分红收益',
+    undividend_money: '待分红金额',
+
     dividend_income: '分红收益',
     dividend_income_total: '分红总收益',
     buy_course_total: '购买系统课总人数',
 
     buy_course_number: '购买系统课人数',
+    buy_course_time: '购买系统课时间',
     settlement_status: '结算状态',
     settlement_time: '结算时间',
     settlement_type: '结算方式',
