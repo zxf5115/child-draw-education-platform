@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div class="admin_form_main">
+      <div class="admin_form_main color">
         <el-form label-width="100px" ref="dataForm" :model="dataForm" :rules="dataRule">
 
           <el-form-item :label="$t('advertising.position.title')" prop="position_id">
@@ -33,6 +33,9 @@
               <img v-if="dataForm.picture" :src="dataForm.picture" class="avatar-upload">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
+            <div class="red">
+              上传图片分辨率为：355*170
+            </div>
           </el-form-item>
 
           <el-form-item :label="$t('advertising.url')" prop="url">

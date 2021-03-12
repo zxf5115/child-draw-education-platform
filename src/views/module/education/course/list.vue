@@ -83,20 +83,10 @@
           <el-table-column prop="real_price" :label="$t('course.real_price')" width="100">
           </el-table-column>
 
-          <el-table-column :label="$t('course.recruitment')" width="100">
-            <template slot-scope="scope">
-              <span v-if="scope.row.unlock">
-                {{ scope.row.unlock.title }}
-              </span>
-            </template>
+          <el-table-column prop="recruitment_number" :label="$t('course.recruitment')" width="100">
           </el-table-column>
 
-          <el-table-column :label="$t('course.management_number')" width="100">
-            <template slot-scope="scope">
-              <span v-if="scope.row.unlock">
-                {{ scope.row.unlock.title }}
-              </span>
-            </template>
+          <el-table-column prop="class_size" :label="$t('course.management_number')" width="100">
           </el-table-column>
 
           <el-table-column :label="$t('course.unlock.title')" width="80">
@@ -107,12 +97,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('course.apply_number')" width="100">
-            <template slot-scope="scope">
-              <span class="blue" v-if="scope.row.unlock">
-                {{ scope.row.unlock.title }}
-              </span>
-            </template>
+          <el-table-column prop="apply_number" :label="$t('course.apply_number')" width="100">
           </el-table-column>
 
           <el-table-column :label="$t('common.status')" width="80">
