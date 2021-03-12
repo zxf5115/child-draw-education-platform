@@ -61,6 +61,7 @@
     {
       return {
         model: 'education/courseware/level/unit',
+        upload_headers:{},
         dataForm:
         {
           id: 0,
