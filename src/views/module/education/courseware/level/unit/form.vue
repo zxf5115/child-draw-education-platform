@@ -26,6 +26,13 @@
             <el-input :placeholder="$t('common.please_input') + $t('courseware.level.unit.description')" type="textarea" v-model="dataForm.description"></el-input>
           </el-form-item>
 
+          <el-form-item :label="$t('courseware.level.unit.picture')" prop="picture">
+            <el-upload class="avatar-uploader" :action="this.$http.adornUrl('/file/picture')" :show-file-list="false" :headers="upload_headers" :on-success="handlePictureSuccess" :before-upload="beforePictureUpload">
+              <img v-if="dataForm.picture" :src="dataForm.picture" class="avatar-upload">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+
           <el-form-item :label="$t('courseware.level.unit.sort')" prop="sort">
             <el-input-number :placeholder="$t('common.please_input') + $t('courseware.level.unit.sort')" :min="0" :max="100" v-model="dataForm.sort"></el-input-number>
           </el-form-item>
@@ -61,13 +68,17 @@
           level_id: 0,
           title: '',
           description: '',
+          picture: '',
           sort: 0,
         },
         dataRule:
         {
           title: [
             { required: true, message: this.$t('courseware.level.unit.rules.title.require'), trigger: 'blur' }
-          ]
+          ],
+          picture: [
+            { required: true, message: this.$t('courseware.level.unit.rules.picture.require'), trigger: 'blur' }
+          ],
         }
       };
     },
@@ -92,6 +103,7 @@
                 this.dataForm.level_id      = data.data.level_id
                 this.dataForm.title         = data.data.title
                 this.dataForm.description   = data.data.description
+                this.dataForm.picture       = data.data.picture
                 this.dataForm.sort          = data.data.sort
               }
             })
@@ -111,6 +123,7 @@
                 'level_id': this.dataForm.level_id,
                 'title': this.dataForm.title,
                 'description': this.dataForm.description,
+                'picture': this.dataForm.picture,
                 'sort': this.dataForm.sort,
               })
             }).then(({data}) => {
@@ -134,6 +147,9 @@
       this.dataForm.courseware_id = this.$route.query.courseware_id;
       this.dataForm.level_id      = this.$route.query.level_id;
       this.init();
+
+      // 要保证取到
+      this.upload_headers.Authorization = 'Bearer ' + localStorage.getItem('token');
     }
   };
 </script>

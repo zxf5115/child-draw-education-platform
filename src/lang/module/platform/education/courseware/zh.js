@@ -52,13 +52,17 @@ export const courseware = {
 
       title: '单元标题',
       description: '单元介绍',
+      picture: '单元封面',
       total: '视频数量',
       sort: '单元排序',
 
       rules: {
         title: {
           require: '单元标题不能为空',
-        }
+        },
+        picture: {
+          require: '单元封面不能为空',
+        },
       },
 
       point: {
