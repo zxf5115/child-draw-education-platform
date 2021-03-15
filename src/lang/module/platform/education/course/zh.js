@@ -6,7 +6,7 @@ export const course = {
 
   present_info: '课程礼包',
   unlock_info: '课程解锁',
-  teacher_info: '招生老师',
+  teacher_info: '课程老师',
   share_info: '分享图片',
 
   title: '课程名字',

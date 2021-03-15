@@ -172,6 +172,8 @@
         }).then(({data}) => {
           if (data && data.status === 200) {
             this.courseware_title = data.data.title
+
+            this.loadTeacherList(data.data.title);
           } else {
             this.$message.error(this.$t(data.message))
           }
@@ -192,9 +194,17 @@
           }
         })
       },
-      loadTeacherList () {
+      loadTeacherList (courseware_title) {
+
+        let url = '/teacher/management/select'
+
+        if(courseware_title == '体验课')
+        {
+          url = '/teacher/recruitment/select'
+        }
+
         this.$http({
-          url: this.$http.adornUrl('/teacher/recruitment/select'),
+          url: this.$http.adornUrl(url),
           method: 'get',
           params: this.$http.adornParams({})
         }).then(({data}) => {
@@ -215,7 +225,6 @@
       this.loadCourseTitle();
       this.loadCoursewareTitle();
       this.loadLevelList();
-      this.loadTeacherList();
     },
   };
 </script>
