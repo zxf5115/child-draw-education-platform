@@ -45,7 +45,7 @@
           <el-table-column type="selection" header-align="center" align="center">
           </el-table-column>
 
-          <el-table-column prop="order_no" :label="$t('order.course.order_no')" width="140">
+          <el-table-column prop="order_no" :label="$t('order.course.order_no')" width="180">
           </el-table-column>
 
           <el-table-column :label="$t('course.title')" width="200">
