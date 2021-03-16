@@ -168,7 +168,9 @@
         this.$http({
           url: this.$http.adornUrl(`/education/courseware/view/${this.dataForm.courseware_id}`),
           method: 'get',
-          params: this.$http.adornParams({})
+          params: this.$http.adornParams({
+            'status': 1
+          })
         }).then(({data}) => {
           if (data && data.status === 200) {
             this.courseware_title = data.data.title
@@ -184,6 +186,7 @@
           url: this.$http.adornUrl('/education/courseware/level/select'),
           method: 'get',
           params: this.$http.adornParams({
+            'status': 1,
             'courseware_id': this.dataForm.courseware_id
           })
         }).then(({data}) => {
