@@ -59,36 +59,37 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
+                  <el-form-item :label="$t('order.goods.order_status')" label-width="80">
+                    {{ dataForm.order_status.text }}
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8" v-if="1 == dataForm.exchange_type.value">
                   <el-form-item :label="$t('order.goods.lollipop_total')" label-width="80">
                     <span class="red">
                       {{ dataForm.lollipop_total }}
                     </span>
                   </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="8" v-if="2 == dataForm.exchange_type.value">
                   <el-form-item :label="$t('order.goods.pay_money')" label-width="80">
                     <span class="red">
                       {{ dataForm.pay_money }}
                     </span>
                   </el-form-item>
                 </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="8">
+                <el-col :span="8" v-if="1 == dataForm.exchange_type.value">
                   <el-form-item :label="$t('order.goods.exchange_type')" label-width="80">
                     {{ dataForm.exchange_type.text }}
                   </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="8" v-if="2 == dataForm.exchange_type.value">
                   <el-form-item :label="$t('order.goods.pay_type')" label-width="80">
                     {{ dataForm.pay_type.text }}
                   </el-form-item>
                 </el-col>
-                <el-col :span="8">
-                  <el-form-item :label="$t('order.goods.order_status')" label-width="80">
-                    {{ dataForm.order_status.text }}
-                  </el-form-item>
-                </el-col>
+
               </el-row>
             </el-form>
           </div>
