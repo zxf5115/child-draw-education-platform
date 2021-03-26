@@ -33,7 +33,7 @@
           <el-table-column prop="username" :label="$t('member.username')"  width="100">
           </el-table-column>
 
-          <el-table-column :label="$t('member.info')" width="280">
+          <el-table-column :label="$t('member.info')" width="300">
             <template slot-scope="scope">
               <dl class="table_dl">
                 <dt>
@@ -51,37 +51,37 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.archive.sex')" width="70">
+          <el-table-column :label="$t('member.archive.sex')">
             <template slot-scope="scope" v-if="scope.row.archive">
               {{ scope.row.archive.sex.text }}
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.archive.birthday')" width="100">
+          <el-table-column :label="$t('member.archive.birthday')">
             <template slot-scope="scope" v-if="scope.row.archive">
               {{ scope.row.archive.birthday }}
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.archive.age')" width="70">
+          <el-table-column :label="$t('member.archive.age')">
             <template slot-scope="scope" v-if="scope.row.archive">
               {{ scope.row.archive.age }}
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.red_envelope')" width="70">
+          <el-table-column :label="$t('member.red_envelope')">
             <template slot-scope="scope" v-if="scope.row.asset">
               {{ scope.row.asset.red_envelope }}
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.lollipop')" width="70">
+          <el-table-column :label="$t('member.lollipop')">
             <template slot-scope="scope" v-if="scope.row.asset">
               {{ scope.row.asset.lollipop }}
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.production')" width="70">
+          <el-table-column :label="$t('member.production')">
             <template slot-scope="scope" v-if="scope.row.asset">
               {{ scope.row.asset.production }}
             </template>
