@@ -178,6 +178,7 @@
         {
           id: 0,
           pay_type: '',
+          pay_status: '',
           order_status: '',
         }
       };
