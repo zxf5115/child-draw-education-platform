@@ -311,6 +311,7 @@
           params: this.$http.adornParams({
             'page': this.pageIndex,
             'limit': this.pageSize,
+            'member_id': this.dataForm.id
           })
         }).then(({data}) => {
           if (data && data.status === 200)

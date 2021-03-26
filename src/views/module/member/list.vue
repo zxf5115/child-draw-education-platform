@@ -69,18 +69,6 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('member.archive.address')" width="250">
-            <template slot-scope="scope" v-if="scope.row.archive">
-              {{ scope.row.archive.address }}
-            </template>
-          </el-table-column>
-
-          <el-table-column :label="$t('member.archive.weixin')" width="120">
-            <template slot-scope="scope" v-if="scope.row.archive">
-              {{ scope.row.archive.weixin }}
-            </template>
-          </el-table-column>
-
           <el-table-column :label="$t('member.red_envelope')" width="70">
             <template slot-scope="scope" v-if="scope.row.asset">
               {{ scope.row.asset.red_envelope }}
