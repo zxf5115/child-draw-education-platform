@@ -88,6 +88,12 @@
             </template>
           </el-table-column>
 
+          <el-table-column prop="pay_status" :label="$t('order.course.pay_status')" width="100">
+            <template slot-scope="scope">
+              {{ scope.row.pay_status.text }}
+            </template>
+          </el-table-column>
+
           <el-table-column prop="order_status" :label="$t('order.goods.order_status')" width="100">
             <template slot-scope="scope">
               {{ scope.row.order_status.text }}

@@ -14,6 +14,7 @@ export const order = {
     pay_money: '实付金额(元)',
     pay_type: '支付类型',
     send: '发货',
+    pay_status: '支付状态',
     order_status: '礼包状态',
     create_time: '支付时间',
     money_total: '课程收入(元):',
