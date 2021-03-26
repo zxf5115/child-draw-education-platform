@@ -4,13 +4,6 @@
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
           <div>
-            <router-link :to="{name: 'module_complain_form'}">
-              <el-button v-if="isAuth('module:complain:form')" type="success" icon="el-icon-plus">
-                {{ $t('common.create') }}
-              </el-button>
-            </router-link>
-          </div>
-          <div>
             <el-button v-if="isAuth('module:complain:category:list')" icon="el-icon-price-tag" @click="$router.push({name: 'module_complain_category_list'})">
               {{ $t('complain.category.list') }}
             </el-button>
