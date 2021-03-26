@@ -59,6 +59,11 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
+                  <el-form-item :label="$t('order.goods.pay_status')" label-width="80">
+                    {{ dataForm.pay_status.text }}
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
                   <el-form-item :label="$t('order.goods.order_status')" label-width="80">
                     {{ dataForm.order_status.text }}
                   </el-form-item>

@@ -87,12 +87,17 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item :label="$t('order.course.order_status')" label-width="80">
-                    {{ dataForm.order_status.text }}
+                  <el-form-item :label="$t('order.course.pay_status')" label-width="80">
+                    {{ dataForm.pay_status.text }}
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
+                <el-col :span="8">
+                  <el-form-item :label="$t('order.course.order_status')" label-width="80">
+                    {{ dataForm.order_status.text }}
+                  </el-form-item>
+                </el-col>
                 <el-col :span="8">
                   <el-form-item :label="$t('course.present.title')" label-width="80">
                     <span class="orange" v-if="dataForm.course">

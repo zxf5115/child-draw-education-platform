@@ -69,18 +69,6 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item :label="$t('member.archive.weixin')" label-width="80" v-if="dataForm.archive">
-                    {{ dataForm.archive.weixin }}
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item :label="$t('member.archive.address')" label-width="80" v-if="dataForm.archive">
-                    {{ dataForm.archive.address }}
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="6">
                   <el-form-item :label="$t('member.red_envelope')" label-width="100">
                     <span v-if="dataForm.asset">
                       {{ dataForm.asset.red_envelope }}

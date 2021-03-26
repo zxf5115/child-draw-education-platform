@@ -64,6 +64,7 @@ export const order = {
     pay_type: '支付类型',
     exchange_type: '兑换方式',
     send: '发货',
+    pay_status: '支付状态',
     order_status: '订单状态',
     create_time: '支付时间',
     money_total: '商品收入(元):',
