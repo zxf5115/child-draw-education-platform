@@ -29,7 +29,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button v-if="isAuth('module:order:goods:logistics:handle')" type="primary" @click="dataFormSubmit()">
+            <el-button v-if="isAuth('module:order:goods:logistics:handle')" type="primary" @click="dataFormSubmit()" :disabled="disabled">
               {{ $t('common.confirm') }}
             </el-button>
             <el-button @click="resetForm()">
@@ -66,7 +66,8 @@
           logistics_no: [
             { required: true, message: this.$t('order.goods.logistics.rules.logistics_no.require'), trigger: 'blur' },
           ]
-        }
+        },
+        disabled: false,
       };
     },
     methods: {
@@ -98,6 +99,8 @@
       dataFormSubmit () {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
+            this.disabled = true
+
             this.$http({
               url: this.$http.adornUrl(`/order/goods/logistics/handle`),
               method: 'post',
