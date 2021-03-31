@@ -6,6 +6,7 @@ export const advertising = {
   view: '查看广告',
 
   title: '广告标题',
+  type: '链接类型',
   link: '广告链接',
   picture: '广告图片',
   url: '广告资源',

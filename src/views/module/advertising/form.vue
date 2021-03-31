@@ -42,6 +42,12 @@
             <el-input :placeholder="$t('common.please_input')+$t('advertising.url')" v-model="dataForm.url"></el-input>
           </el-form-item>
 
+          <el-form-item :label="$t('advertising.type')" prop="type">
+            <el-select v-model="dataForm.type" :placeholder="$t('common.please_select')+$t('advertising.type')">
+              <el-option v-for="(v,k) in linkType" :label="v.title" :key="k" :value="v.id"></el-option>
+            </el-select>
+          </el-form-item>
+
           <el-form-item :label="$t('advertising.link')" prop="link">
             <el-input :placeholder="$t('common.please_input')+$t('advertising.link')" v-model="dataForm.link"></el-input>
           </el-form-item>
@@ -72,6 +78,12 @@
       return {
         model: 'advertising',
         position: [],
+        linkType: [
+          {"id":1, "title":"课程"},
+          {"id":2, "title":"商品"},
+          {"id":3, "title":"活动"},
+          {"id":4, "title":"邀请"},
+        ],
         upload_headers:{},
         dataForm:
         {
@@ -80,6 +92,7 @@
           title: '',
           picture: '',
           url: '',
+          type: 1,
           link: '',
           sort: 0,
         },
@@ -114,6 +127,7 @@
                 this.dataForm.title            = data.data.title
                 this.dataForm.picture          = data.data.picture
                 this.dataForm.url              = data.data.url
+                this.dataForm.type             = data.data.type
                 this.dataForm.link             = data.data.link
                 this.dataForm.sort             = data.data.sort
               }
@@ -134,6 +148,7 @@
                 'title': this.dataForm.title,
                 'picture': this.dataForm.picture,
                 'url': this.dataForm.url,
+                'type': this.dataForm.type,
                 'link': this.dataForm.link,
                 'sort': this.dataForm.sort,
               })
