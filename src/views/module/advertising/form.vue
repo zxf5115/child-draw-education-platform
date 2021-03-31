@@ -127,7 +127,7 @@
                 this.dataForm.title            = data.data.title
                 this.dataForm.picture          = data.data.picture
                 this.dataForm.url              = data.data.url
-                this.dataForm.type             = data.data.type
+                this.dataForm.type             = data.data.type.value
                 this.dataForm.link             = data.data.link
                 this.dataForm.sort             = data.data.sort
               }
