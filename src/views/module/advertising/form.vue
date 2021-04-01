@@ -43,14 +43,28 @@
           </el-form-item>
 
           <el-form-item :label="$t('advertising.type')" prop="type">
-            <el-select v-model="dataForm.type" :placeholder="$t('common.please_select')+$t('advertising.type')">
+            <el-select v-model="dataForm.type" :placeholder="$t('common.please_select')+$t('advertising.type')" @change="setLinkType">
               <el-option v-for="(v,k) in linkType" :label="v.title" :key="k" :value="v.id"></el-option>
             </el-select>
           </el-form-item>
 
-          <el-form-item :label="$t('advertising.link')" prop="link">
+          <el-form-item :label="$t('advertising.link')" prop="link" :hidden="link">
             <el-input :placeholder="$t('common.please_input')+$t('advertising.link')" v-model="dataForm.link"></el-input>
           </el-form-item>
+
+          <el-form-item :label="$t('advertising.link')" prop="course_id" :hidden="course">
+            <el-select v-model="dataForm.course_id" :placeholder="$t('common.please_select')+$t('advertising.link')">
+              <el-option v-for="(v,k) in courseList" :label="v.title" :key="k" :value="v.id"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item :label="$t('advertising.link')" prop="goods_id" :hidden="goods">
+            <el-select v-model="dataForm.goods_id" :placeholder="$t('common.please_select')+$t('advertising.link')">
+              <el-option v-for="(v,k) in goodsList" :label="v.title" :key="k" :value="v.id"></el-option>
+            </el-select>
+          </el-form-item>
+
+
 
           <el-form-item :label="$t('common.sort')" prop="sort">
             <el-input-number :placeholder="$t('common.please_input')+$t('common.sort')" v-model="dataForm.sort"></el-input-number>
@@ -94,6 +108,8 @@
           url: '',
           type: 1,
           link: '',
+          course_id: '',
+          goods_id: '',
           sort: 0,
         },
         dataRule:
@@ -104,7 +120,12 @@
           title: [
             { required: true, message: this.$t('advertising.rules.title.require'), trigger: 'blur' },
           ]
-        }
+        },
+        course: false,
+        goods: true,
+        link: true,
+        courseList: [],
+        goodsList: [],
       };
     },
     methods: {
@@ -123,13 +144,34 @@
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.position_id      = data.data.position_id
-                this.dataForm.title            = data.data.title
-                this.dataForm.picture          = data.data.picture
-                this.dataForm.url              = data.data.url
-                this.dataForm.type             = data.data.type.value
-                this.dataForm.link             = data.data.link
-                this.dataForm.sort             = data.data.sort
+                this.dataForm.position_id = data.data.position_id
+                this.dataForm.title       = data.data.title
+                this.dataForm.picture     = data.data.picture
+                this.dataForm.url         = data.data.url
+                this.dataForm.type        = data.data.type.value
+                this.dataForm.link        = data.data.link
+                this.dataForm.course_id   = data.data.course_id
+                this.dataForm.goods_id    = data.data.goods_id
+                this.dataForm.sort        = data.data.sort
+
+                if(1 == this.dataForm.type)
+                {
+                  this.course = false
+                  this.goods = true
+                  this.link = true
+                }
+                else if(2 == this.dataForm.type)
+                {
+                  this.course = true
+                  this.goods = false
+                  this.link = true
+                }
+                else
+                {
+                  this.course = true
+                  this.goods = true
+                  this.link = false
+                }
               }
             })
           }
@@ -150,6 +192,8 @@
                 'url': this.dataForm.url,
                 'type': this.dataForm.type,
                 'link': this.dataForm.link,
+                'course_id': this.dataForm.course_id,
+                'goods_id': this.dataForm.goods_id,
                 'sort': this.dataForm.sort,
               })
             }).then(({data}) => {
@@ -167,7 +211,6 @@
       {
         this.$refs['dataForm'].resetFields();
       },
-
       loadPositionList () {
         this.$http({
           url: this.$http.adornUrl('/advertising/position/select'),
@@ -192,6 +235,50 @@
 
         return isLt2M;
       },
+      setLinkType(val) {
+        if(1 == val)
+        {
+          this.course = false
+          this.goods = true
+          this.link = true
+        }
+        else if(2 == val)
+        {
+          this.course = true
+          this.goods = false
+          this.link = true
+        }
+        else
+        {
+          this.course = true
+          this.goods = true
+          this.link = false
+        }
+      },
+      loadCourseList () {
+        this.$http({
+          url: this.$http.adornUrl('/education/course/select'),
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.status === 200) {
+            this.courseList = data.data
+          } else {
+            this.$message.error(this.$t(data.message))
+          }
+        })
+      },
+      loadGoodsList () {
+        this.$http({
+          url: this.$http.adornUrl('/goods/select'),
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.status === 200) {
+            this.goodsList = data.data
+          } else {
+            this.$message.error(this.$t(data.message))
+          }
+        })
+      },
     },
     created() {
       this.init();
@@ -200,9 +287,10 @@
 
       // 要保证取到
       this.upload_headers.Authorization = 'Bearer ' + localStorage.getItem('token');
-    },
-    mounted () {
+
       this.loadPositionList();
-    },
+      this.loadCourseList();
+      this.loadGoodsList();
+    }
   };
 </script>
