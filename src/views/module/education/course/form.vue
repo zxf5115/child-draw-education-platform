@@ -334,6 +334,16 @@
       handlePictureSuccess(res, file) {
         this.dataForm.picture.push(res.data);
       },
+      handleRemove(file, fileList) {
+
+        let url = []
+
+        fileList.forEach(res => {
+          url.push(res.url);
+        });
+
+        this.dataForm.picture = url
+      }
     },
     created() {
       this.init();
