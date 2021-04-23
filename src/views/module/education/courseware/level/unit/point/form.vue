@@ -8,7 +8,7 @@
 
         <div class="admin_main_block_right">
           <div>
-            <el-button icon="el-icon-back" @click="$router.go(-1)">
+            <el-button icon="el-icon-back" @click="$router.push({name: 'module_education_courseware_level_unit_point_list', query: {courseware_id: dataForm.courseware_id, level_id: dataForm.level_id, unit_id: dataForm.unit_id}})">
               {{ $t('common.return') }}
             </el-button>
           </div>
