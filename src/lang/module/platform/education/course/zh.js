@@ -17,6 +17,7 @@ export const course = {
   course_start_time: '开课时间',
   line_price: '课程原价(元)',
   real_price: '课程价格(元)',
+  product_id: '苹果产品编号',
   recruitment: '招生老师',
   management_number: '管理数量',
   apply_number: '报名人数',

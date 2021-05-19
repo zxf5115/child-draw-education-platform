@@ -69,6 +69,13 @@
             </el-input-number>
           </el-form-item>
 
+          <el-form-item :label="$t('course.product_id')" prop="product_id">
+            <el-select v-model="dataForm.product_id" :placeholder="$t('common.please_select')+$t('course.product_id')">
+              <el-option v-for="(v,k) in productList" :label="v.title" :key="k" :value="v.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
           <el-form-item :label="$t('course.class_size')" prop="class_size">
             <el-input-number v-model="dataForm.class_size" :min="1">
             </el-input-number>
@@ -125,6 +132,11 @@
         pictureList: [],
         coursewareList: [],
         unlockList: [],
+        productList: [
+          {'id': 'com.xiaochouyu.fishapp.18', 'title': '18元课程'},
+          {'id': 'com.xiaochouyu.fishapp.30', 'title': '30元课程'},
+          {'id': 'com.xiaochouyu.fishapp.45', 'title': '45元课程'},
+        ],
         contentEditor: '',
         planEditor: '',
         dataForm:
@@ -141,6 +153,7 @@
           course_start_time: '',
           real_price: 0,
           line_price: 0,
+          product_id: '',
           class_size: 1,
           sort: 0,
         },
@@ -200,6 +213,7 @@
                 this.dataForm.course_start_time = data.data.course_start_time
                 this.dataForm.real_price        = data.data.real_price
                 this.dataForm.line_price        = data.data.line_price
+                this.dataForm.product_id        = data.data.product_id
                 this.dataForm.class_size        = data.data.class_size
                 this.dataForm.sort              = data.data.sort
 
@@ -235,6 +249,7 @@
                 'course_start_time': this.dataForm.course_start_time,
                 'real_price': this.dataForm.real_price,
                 'line_price': this.dataForm.line_price,
+                'product_id': this.dataForm.product_id,
                 'class_size': this.dataForm.class_size,
                 'sort': this.dataForm.sort,
                 'content': this.contentEditor.getValue(),
