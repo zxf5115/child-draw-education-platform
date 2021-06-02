@@ -136,7 +136,7 @@
           {'id': 'com.xiaochouyu.fishapp.18', 'title': '18元课程'},
           {'id': 'com.xiaochouyu.fishapp.30', 'title': '30元课程'},
           {'id': 'com.xiaochouyu.fishapp.45', 'title': '45元课程'},
-          {'id': 'com.xiaochouyu.fishapp.998', 'title': '998元课程'},
+          {'id': 'com.xiaochouyu.fishapp.998RMB', 'title': '998元课程'},
         ],
         contentEditor: '',
         planEditor: '',
