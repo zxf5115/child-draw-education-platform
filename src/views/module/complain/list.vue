@@ -51,6 +51,12 @@
           <el-table-column prop="content" :label="$t('complain.content')">
           </el-table-column>
 
+          <el-table-column :label="$t('member.nickname')">
+            <template slot-scope="scope" v-if="scope.row.member">
+              {{ scope.row.member.nickname }}
+            </template>
+          </el-table-column>
+
           <el-table-column :label="$t('complain.read_status')">
             <template slot-scope="scope">
               {{ scope.row.read_status.text }}
