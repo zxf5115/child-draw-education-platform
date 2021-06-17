@@ -87,6 +87,12 @@
             </template>
           </el-table-column>
 
+          <el-table-column :label="$t('member.inviter_nickname')">
+            <template slot-scope="scope" v-if="scope.row.inviter">
+              {{ scope.row.inviter.nickname }}
+            </template>
+          </el-table-column>
+
           <el-table-column :label="$t('common.handle')" fixed="right" width="280">
             <template slot-scope="scope">
               <el-button v-if="isAuth('module:member:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_member_view', query: {id: scope.row.id}})">

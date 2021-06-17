@@ -17,6 +17,7 @@ export const member = {
   mobile: '手机',
   email: '邮箱',
   nickname: '宝宝昵称',
+  inviter_nickname: '推荐人',
 
   red_envelope: '红包金额',
   lollipop: '棒棒糖',
