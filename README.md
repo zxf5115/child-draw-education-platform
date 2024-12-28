@@ -4,8 +4,7 @@
 
 
 ## Technology use
-- Back-end code：Laravel 6.0
-- Front-end code：Vue 2.0
+- Development language：Vue 2.0
 
 
 ## Picture display
